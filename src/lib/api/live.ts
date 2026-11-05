@@ -1,6 +1,8 @@
 import type { GeesCatalog } from '@/types/catalog';
 import type {
   ApiClient,
+  CreateOrderInput,
+  CreateOrderResult,
   DeliveryArea,
   FaqItem,
   NewsletterSubscriptionPayload,
@@ -45,15 +47,22 @@ export const liveApiClient: ApiClient = {
     return fetchJson<ReviewItem[]>('/api/reviews', { signal });
   },
 
-  submitOrder(
-    payload: OrderSubmissionPayload,
+  createOrder(
+    payload: CreateOrderInput,
     signal?: AbortSignal
-  ): Promise<OrderSubmissionResult> {
-    return fetchJson<OrderSubmissionResult>('/api/orders', {
+  ): Promise<CreateOrderResult> {
+    return fetchJson<CreateOrderResult>('/api/orders', {
       method: 'POST',
       body: JSON.stringify(payload),
       signal,
     });
+  },
+
+  submitOrder(
+    payload: OrderSubmissionPayload,
+    signal?: AbortSignal
+  ): Promise<OrderSubmissionResult> {
+    return this.createOrder(payload, signal);
   },
 
   subscribeNewsletter(

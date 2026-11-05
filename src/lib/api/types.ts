@@ -32,39 +32,50 @@ export interface OrderLinePayload {
   itemId: EntityId;
   variantId: EntityId | null;
   addOnIds: EntityId[];
+  addOns?: { addOnId: EntityId; qty: number }[];
   quantity: number;
 }
 
 export interface OrderSubmissionPayload {
   orderId: string;
+  idempotencyKey?: string;
   createdAt: ISODateString;
   customerName: string;
   customerPhone: string;
+  homeAddress?: string | null;
   fulfillment: FulfillmentType;
   deliveryAreaId: EntityId | null;
   transportMode: TransportMode | null;
   address: string | null;
-  landmark: string | null;
-  notes: string | null;
+  exactAddress?: string | null;
+  landmark?: string | null;
+  notes?: string | null;
   lines: OrderLinePayload[];
 }
 
-export interface OrderSubmissionResult {
+export type CreateOrderInput = OrderSubmissionPayload;
+
+export interface CreateOrderResult {
   orderId: string;
-  whatsappUrl: string;
-  messagePreview: string;
-  subtotal: number;
-  deliveryFee: number;
   total: number;
+  deliveryFee: number;
+  subtotal: number;
+  summaryText: string;
+  messagePreview: string;
+  whatsappUrl: string;
 }
+
+export type OrderSubmissionResult = CreateOrderResult;
 
 export interface NewsletterSubscriptionPayload {
   email: string;
   subscribedAt: ISODateString;
+  website?: string;
 }
 
 export interface NewsletterSubscriptionResult {
   ok: boolean;
+  status?: 'success' | 'already_subscribed' | 'error';
   message: string;
 }
 
@@ -73,6 +84,10 @@ export interface ApiClient {
   getDeliveryAreas(signal?: AbortSignal): Promise<DeliveryArea[]>;
   getFaqs(signal?: AbortSignal): Promise<FaqItem[]>;
   getReviews(signal?: AbortSignal): Promise<ReviewItem[]>;
+  createOrder(
+    payload: CreateOrderInput,
+    signal?: AbortSignal
+  ): Promise<CreateOrderResult>;
   submitOrder(
     payload: OrderSubmissionPayload,
     signal?: AbortSignal

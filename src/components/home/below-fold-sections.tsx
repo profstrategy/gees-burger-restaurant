@@ -4,6 +4,12 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 import { StageSection } from '@/components/ui/stage-section';
 
+const FaqSection = dynamic(() => import('@/components/home/faq-section'), {
+  loading: () => (
+    <div className="mx-auto max-w-4xl h-72 rounded-2xl border border-white/10 bg-[#161616] p-6 animate-pulse" />
+  ),
+});
+
 const ReviewsCarousel = dynamic(
   () => import('@/components/home/reviews-carousel'),
   {
@@ -12,12 +18,6 @@ const ReviewsCarousel = dynamic(
     ),
   }
 );
-
-const FaqSection = dynamic(() => import('@/components/home/faq-section'), {
-  loading: () => (
-    <div className="mx-auto max-w-4xl h-72 rounded-2xl border border-white/10 bg-[#161616] p-6 animate-pulse" />
-  ),
-});
 
 const NewsletterSection = dynamic(
   () => import('@/components/home/newsletter-section'),
@@ -31,16 +31,7 @@ const NewsletterSection = dynamic(
 export function BelowFoldHomeSections() {
   return (
     <>
-      <StageSection
-        id="reviews"
-        stain="top-left"
-        className="py-16 sm:py-20 border-t border-white/5"
-      >
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <ReviewsCarousel />
-        </div>
-      </StageSection>
-
+      {/* 3. FAQ (lazy) */}
       <StageSection
         id="faq"
         stain="top-right"
@@ -52,8 +43,21 @@ export function BelowFoldHomeSections() {
         </div>
       </StageSection>
 
+      {/* 4. Reviews (lazy) */}
       <StageSection
+        id="reviews"
         stain="top-left"
+        className="py-16 sm:py-20 border-t border-white/5"
+      >
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <ReviewsCarousel />
+        </div>
+      </StageSection>
+
+      {/* 5. Newsletter (lazy) */}
+      <StageSection
+        id="newsletter"
+        stain="top-right"
         className="py-16 sm:py-20 border-t border-white/5"
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

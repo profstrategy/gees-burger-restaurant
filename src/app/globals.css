@@ -1,0 +1,234 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+:root {
+  --gb-black: #101010;
+  --gb-surface: #161616;
+  --gb-yellow: #F8E010;
+  --gb-splash: #F8E850;
+  --gb-white: #F8F8F8;
+  --gb-soft: #E6E6E6;
+  --gb-ash: #6B6B6B;
+  --gb-red: #E10600;
+  --hero-tilt: 12deg;
+}
+
+@layer base {
+  html {
+    background-color: var(--gb-black);
+    color: var(--gb-white);
+    color-scheme: dark;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--gb-black);
+    color: var(--gb-white);
+    font-family: var(--font-poppins), sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, .font-display {
+    font-family: var(--font-bebas), sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+}
+
+/* .gb-stage & corner stain layers */
+.gb-stage {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.gb-stain {
+  position: absolute;
+  pointer-events: none;
+  z-index: -1;
+  user-select: none;
+  opacity: 0.16;
+}
+
+.gb-stain-top-left {
+  top: 0;
+  left: 0;
+  width: clamp(90px, 18vw, 244px);
+}
+
+.gb-stain-top-right {
+  top: 0;
+  right: 0;
+  width: clamp(120px, 26vw, 349px);
+}
+
+.gb-stain-bottom-left {
+  bottom: 2rem;
+  left: 0;
+  width: clamp(70px, 12vw, 156px);
+}
+
+@media (max-width: 479px) {
+  .gb-stain-secondary {
+    display: none !important;
+  }
+}
+
+/* Effect 1: Orbiting card border (.gb-orbit) */
+@property --gb-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.gb-orbit {
+  position: relative;
+  border-radius: 16px;
+  background: var(--gb-surface);
+}
+
+.gb-orbit::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1.5px;
+  border-radius: inherit;
+  pointer-events: none;
+  background: conic-gradient(
+    from var(--gb-angle),
+    transparent 0deg 35deg,
+    var(--gb-yellow) 70deg 90deg,
+    transparent 125deg 205deg,
+    rgba(255, 255, 255, 0.28) 225deg 235deg,
+    transparent 262deg
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  animation: gb-spin 6s linear infinite;
+}
+
+@keyframes gb-spin {
+  to {
+    --gb-angle: 360deg;
+  }
+}
+
+.gb-orbit:not([data-inview="true"])::before {
+  animation-play-state: paused;
+}
+
+/* Effect 2: Dirty-yellow button (.gb-btn) with left-to-right #F8E010 wipe */
+.gb-btn {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0.625rem 1.375rem;
+  border-radius: 0.625rem;
+  border: 1px solid var(--gb-yellow);
+  color: var(--gb-white);
+  font-weight: 600;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: color 240ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 240ms cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 180ms ease;
+}
+
+.gb-btn-primary {
+  background-color: var(--gb-black);
+  background-image:
+    radial-gradient(ellipse 80% 60% at 22% 50%, rgba(248, 224, 16, 0.22) 0%, transparent 70%),
+    radial-gradient(ellipse 70% 55% at 78% 45%, rgba(248, 232, 80, 0.16) 0%, transparent 65%),
+    linear-gradient(108deg, rgba(248, 224, 16, 0.12) 0%, rgba(16, 16, 16, 0.92) 52%, rgba(248, 224, 16, 0.15) 100%);
+}
+
+.gb-btn-ghost {
+  background-color: rgba(16, 16, 16, 0.72);
+  background-image:
+    radial-gradient(ellipse 75% 50% at 50% 50%, rgba(248, 224, 16, 0.09) 0%, transparent 70%);
+  border-color: rgba(248, 224, 16, 0.65);
+}
+
+.gb-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-color: var(--gb-yellow);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 240ms cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.gb-btn:not(:disabled):hover,
+.gb-btn:not(:disabled):focus-visible,
+.gb-btn:not(:disabled):active {
+  color: var(--gb-black);
+  border-color: var(--gb-yellow);
+}
+
+.gb-btn:not(:disabled):hover::before,
+.gb-btn:not(:disabled):focus-visible::before,
+.gb-btn:not(:disabled):active::before {
+  transform: scaleX(1);
+}
+
+.gb-btn:focus-visible {
+  outline: 2px solid var(--gb-yellow);
+  outline-offset: 2px;
+}
+
+.gb-btn:disabled {
+  opacity: 0.48;
+  cursor: not-allowed;
+}
+
+/* Hero adjacent tilted image pair */
+.gb-hero-bucket {
+  transform: translateY(-24px) rotate(var(--hero-tilt));
+}
+
+.gb-hero-kids {
+  transform: rotate(calc(var(--hero-tilt) * -1));
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gb-orbit::before {
+    animation: none;
+  }
+
+  .gb-btn,
+  .gb-btn::before {
+    transition-duration: 0.01ms !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

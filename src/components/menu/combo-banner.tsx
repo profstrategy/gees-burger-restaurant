@@ -3,41 +3,78 @@ import { Sparkles } from 'lucide-react';
 import type { AddOn } from '@/types/catalog';
 import { formatNaira } from '@/lib/money';
 
-interface ComboBannerProps {
+export interface ComboBannerProps {
   comboAddOn?: AddOn;
 }
 
 /**
- * Informational-only combo banner (no "Apply" button) because the combo
- * is selectable as an add-on directly on each Sliders (x2) card.
+ * Pure helper that derives the Sliders combo informational text from the add-on record:
+ * e.g. { name: "Combo Upgrade (Fries & Drink)", price: "5500" }
+ * -> "Upgrade to a Combo, Fries & Drink, for ₦5,500"
+ */
+export function deriveSliderComboBannerText(comboAddOn?: AddOn): string {
+  if (!comboAddOn) return '';
+  const parenMatch = comboAddOn.name.match(/\(([^)]+)\)/);
+  const includedItems = parenMatch ? parenMatch[1] : comboAddOn.name;
+  const formattedPrice = formatNaira(comboAddOn.price);
+  return `Upgrade to a Combo, ${includedItems}, for ${formattedPrice}`;
+}
+
+/**
+ * Pure helper that derives an informational add-ons banner text from add-on records:
+ * e.g. [Side of Fries (5000), Side of Rice (5000)]
+ * -> "+ Side of Fries ₦5,000 · + Side of Rice ₦5,000"
+ */
+export function deriveMenuAddOnsBannerText(
+  addOns: ReadonlyArray<AddOn>
+): string {
+  return addOns
+    .map((addOn) => `+ ${addOn.name} ${formatNaira(addOn.price)}`)
+    .join(' · ');
+}
+
+/**
+ * Slim informational-only banner rendered below the Sliders (x2) block (no "Apply" button).
  */
 export function ComboBanner({ comboAddOn }: ComboBannerProps) {
-  const name = comboAddOn?.name ?? 'Combo Upgrade (Fries & Drink)';
-  const priceText = formatNaira(comboAddOn?.price ?? '5500');
+  if (!comboAddOn) return null;
+  const text = deriveSliderComboBannerText(comboAddOn);
 
   return (
     <div
       role="note"
       aria-label="Slider Combo Upgrade Information"
-      className="rounded-2xl border border-[#F8E010]/30 bg-[#161616] p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
+      className="rounded-xl border border-[#F8E010]/35 bg-[#161616] px-4 py-3 flex items-center justify-center gap-2.5 text-center text-xs sm:text-sm font-medium text-[#F8F8F8]"
     >
-      <div className="space-y-1">
-        <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#F8E010]">
-          <Sparkles className="h-4 w-4 shrink-0" />
-          <span>Sliders (x2) Combo Upgrade</span>
-        </div>
-        <h3 className="font-display text-2xl sm:text-3xl text-[#F8E010]">
-          MAKE ANY SLIDER A COMBO — +{priceText}
-        </h3>
-        <p className="text-sm text-[#E6E6E6]">
-          Select <span className="font-semibold text-[#F8F8F8]">{name}</span> directly on any Sliders (x2) card below before adding to your cart.
-        </p>
-      </div>
-      <div className="shrink-0">
-        <span className="inline-block font-display text-3xl text-[#F8E010] tabular-nums">
-          +{priceText}
-        </span>
-      </div>
+      <Sparkles className="h-4 w-4 text-[#F8E010] shrink-0" />
+      <span>{text}</span>
+    </div>
+  );
+}
+
+export interface MenuAddOnsBannerProps {
+  addOns: ReadonlyArray<AddOn>;
+  ariaLabel?: string;
+}
+
+/**
+ * Slim informational banner rendered below Gee's Fried Chicken block, derived from add-on records.
+ */
+export function MenuAddOnsBanner({
+  addOns,
+  ariaLabel = 'Available Extras Information',
+}: MenuAddOnsBannerProps) {
+  if (addOns.length === 0) return null;
+  const text = deriveMenuAddOnsBannerText(addOns);
+
+  return (
+    <div
+      role="note"
+      aria-label={ariaLabel}
+      className="rounded-xl border border-[#F8E010]/35 bg-[#161616] px-4 py-3 flex items-center justify-center gap-2.5 text-center text-xs sm:text-sm font-medium text-[#F8F8F8]"
+    >
+      <Sparkles className="h-4 w-4 text-[#F8E010] shrink-0" />
+      <span>{text}</span>
     </div>
   );
 }

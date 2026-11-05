@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { api, type FaqItem } from '@/lib/api';
 import faqFallback from '@/data/faq.json';
 import {
@@ -9,9 +9,11 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
+import { SectionHeading } from '@/components/common/section-heading';
 
 export default function FaqSection() {
   const [faqs, setFaqs] = useState<FaqItem[]>(faqFallback as FaqItem[]);
+  const loggedIdsRef = useRef<Set<string>>(new Set());
 
   useEffect(() => {
     const controller = new AbortController();
@@ -28,16 +30,25 @@ export default function FaqSection() {
     return () => controller.abort();
   }, []);
 
+  // Log a dev warning for any FAQ entry with needsClientConfirmation: true (hide nothing automatically)
+  useEffect(() => {
+    if (process.env.NODE_ENV === 'production') return;
+    for (const faq of faqs) {
+      if (faq.needsClientConfirmation && !loggedIdsRef.current.has(faq.id)) {
+        loggedIdsRef.current.add(faq.id);
+        console.warn(
+          `[Gee's Burger FAQ] Entry "${faq.id}" ("${faq.question}") has needsClientConfirmation: true.`
+        );
+      }
+    }
+  }, [faqs]);
+
   return (
     <div className="mx-auto max-w-4xl space-y-8">
-      <div className="text-center space-y-2">
-        <p className="text-xs font-semibold uppercase tracking-widest text-[#F8E010]">
-          Ordering · Pickup · Delivery
-        </p>
-        <h2 className="font-display text-4xl sm:text-5xl text-[#F8E010] text-balance">
-          FREQUENTLY ASKED QUESTIONS
-        </h2>
-      </div>
+      <SectionHeading
+        kicker="Ordering · Pickup · Delivery"
+        title="FREQUENTLY ASKED QUESTIONS"
+      />
 
       <Accordion type="single" collapsible defaultValue="faq_1">
         {faqs.map((faq) => (

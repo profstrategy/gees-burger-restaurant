@@ -5,39 +5,39 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { ShoppingBag, Menu as MenuIcon, X } from 'lucide-react';
-import { useCart } from '@/context/cart-context';
-import { formatNaira } from '@/lib/money';
+import { useCart } from '@/state/context';
+import { selectCartCount } from '@/state/selectors';
+import { siteConfig } from '@/config/site';
 import { cn } from '@/lib/utils';
 
 const NAV_LINKS = [
   { href: '/', label: 'Home' },
   { href: '/menu', label: 'Menu' },
-  { href: '/cart', label: 'Cart' },
-  { href: '/#reviews', label: 'Reviews' },
-  { href: '/#faq', label: 'FAQ' },
 ];
 
 export function SiteHeader() {
   const pathname = usePathname();
-  const { totalItems, subtotal, isHydrated } = useCart();
+  const cart = useCart();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  const totalItems = cart.isHydrated ? selectCartCount(cart) : 0;
+
   return (
-    <header className="sticky top-0 z-50 w-full bg-[#101010]/95 backdrop-blur border-b border-white/10">
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-8 px-4 sm:px-6 lg:px-8 py-3">
-        {/* Zone 1: Brand Logo on Black, min-width 120px */}
+    <header className="sticky top-0 z-50 w-full bg-[#101010] border-b border-white/10">
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-6 px-4 sm:px-6 lg:px-8 py-3">
+        {/* Brand Logo on Black, min-width 120px */}
         <Link
           href="/"
-          aria-label="Gee's Burger Home"
+          aria-label={`${siteConfig.name} Home`}
           className="inline-flex items-center gap-3 min-w-[120px] min-h-[44px] bg-[#101010] rounded-lg px-2 py-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F8E010] shrink-0"
         >
           <Image
             src="/brand/gees-burger-logo.webp"
-            alt="Gee's Burger"
-            width={44}
-            height={58}
+            alt={siteConfig.name}
+            width={120}
+            height={158}
             referrerPolicy="no-referrer"
-            className="h-11 w-auto object-contain"
+            className="h-12 w-auto min-w-[36px] object-contain"
             priority
           />
           <span className="font-display text-2xl tracking-wider text-[#F8E010] whitespace-nowrap">
@@ -45,23 +45,23 @@ export function SiteHeader() {
           </span>
         </Link>
 
-        {/* Zone 2: Primary Navigation Links */}
+        {/* Primary Navigation Links: Home / Menu */}
         <nav
           aria-label="Primary Navigation"
-          className="hidden md:flex items-center gap-6"
+          className="hidden md:flex items-center gap-8"
         >
           {NAV_LINKS.map((link) => {
             const isActive =
               link.href === '/'
                 ? pathname === '/'
-                : pathname.startsWith(link.href) && !link.href.includes('#');
+                : pathname.startsWith(link.href);
 
             return (
               <Link
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  'inline-flex items-center min-h-[44px] px-2 text-sm font-medium transition-colors whitespace-nowrap shrink-0 border-b-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F8E010] rounded-sm',
+                  'inline-flex items-center min-h-[44px] px-2 text-sm font-semibold transition-colors whitespace-nowrap shrink-0 border-b-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F8E010] rounded-sm',
                   isActive
                     ? 'border-[#F8E010] text-[#F8E010]'
                     : 'border-transparent text-[#E6E6E6] hover:text-[#F8E010]'
@@ -73,25 +73,23 @@ export function SiteHeader() {
           })}
         </nav>
 
-        {/* Zone 3: Primary Cart Action */}
+        {/* Cart Icon with Item-Count Badge from selectCartCount */}
         <div className="flex items-center gap-3 shrink-0">
           <Link
             href="/cart"
-            aria-label={`View Cart (${isHydrated ? totalItems : 0} items, ${
-              isHydrated ? formatNaira(subtotal) : '₦0'
+            aria-label={`Cart (${totalItems} ${
+              totalItems === 1 ? 'item' : 'items'
             })`}
-            className="inline-flex items-center gap-2.5 min-h-[44px] rounded-lg bg-[#F8E010] px-4 py-2 text-sm font-bold text-[#101010] transition-colors hover:bg-[#F8E850] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F8E010] focus-visible:ring-offset-2 focus-visible:ring-offset-[#101010] whitespace-nowrap shrink-0"
+            className="relative inline-flex items-center justify-center gap-2 min-h-[44px] min-w-[44px] rounded-xl border border-[#F8E010]/60 bg-[#161616] px-3.5 py-2 text-sm font-semibold text-[#F8F8F8] hover:border-[#F8E010] hover:text-[#F8E010] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F8E010]"
           >
-            <ShoppingBag className="h-4 w-4 shrink-0" />
-            <span>Cart</span>
-            <span className="tabular-nums font-extrabold">
-              ({isHydrated ? totalItems : 0})
+            <ShoppingBag className="h-5 w-5 text-[#F8E010] shrink-0" />
+            <span className="hidden sm:inline">Cart</span>
+            <span
+              data-testid="header-cart-badge"
+              className="inline-flex h-5 min-w-[20px] items-center justify-center rounded-full bg-[#F8E010] px-1.5 text-xs font-extrabold text-[#101010] tabular-nums"
+            >
+              {totalItems}
             </span>
-            {isHydrated && totalItems > 0 && (
-              <span className="hidden sm:inline tabular-nums border-l border-[#101010]/25 pl-2">
-                {formatNaira(subtotal)}
-              </span>
-            )}
           </Link>
 
           <button
@@ -99,7 +97,7 @@ export function SiteHeader() {
             aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={mobileMenuOpen}
             onClick={() => setMobileMenuOpen((prev) => !prev)}
-            className="inline-flex md:hidden items-center justify-center min-h-[44px] min-w-[44px] rounded-lg border border-white/15 bg-[#161616] text-[#F8F8F8] hover:border-[#F8E010] hover:text-[#F8E010] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F8E010]"
+            className="inline-flex md:hidden items-center justify-center min-h-[44px] min-w-[44px] rounded-xl border border-white/15 bg-[#161616] text-[#F8F8F8] hover:border-[#F8E010] hover:text-[#F8E010] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F8E010]"
           >
             {mobileMenuOpen ? (
               <X className="h-5 w-5" />
@@ -120,7 +118,7 @@ export function SiteHeader() {
             const isActive =
               link.href === '/'
                 ? pathname === '/'
-                : pathname.startsWith(link.href) && !link.href.includes('#');
+                : pathname.startsWith(link.href);
 
             return (
               <Link
@@ -138,6 +136,16 @@ export function SiteHeader() {
               </Link>
             );
           })}
+          <Link
+            href="/cart"
+            onClick={() => setMobileMenuOpen(false)}
+            className="flex items-center justify-between min-h-[44px] px-3 rounded-lg text-sm font-medium text-[#E6E6E6] hover:bg-[#161616] hover:text-[#F8E010] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F8E010]"
+          >
+            <span>Cart</span>
+            <span className="rounded-full bg-[#F8E010] px-2 py-0.5 text-xs font-bold text-[#101010] tabular-nums">
+              {totalItems}
+            </span>
+          </Link>
         </nav>
       )}
     </header>

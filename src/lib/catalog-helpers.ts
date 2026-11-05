@@ -13,10 +13,15 @@ import type {
   OrderSubmissionPayload,
 } from '@/lib/api/types';
 import { formatNaira, multiply, sum, toInt } from '@/lib/money';
+import { validateAndIndexCatalog } from '@/schemas/catalog';
+import { siteConfig } from '@/config/site';
+
+export const MAX_WHATSAPP_MESSAGE_LENGTH = 1800;
 
 export interface CatalogLookup {
   menusById: Map<EntityId, Menu>;
   subTypesById: Map<EntityId, MenuSubType>;
+  subTypesByMenuId: Map<EntityId, MenuSubType[]>;
   itemsById: Map<EntityId, MenuItem>;
   variantsById: Map<EntityId, ItemVariant>;
   variantsByItemId: Map<EntityId, ItemVariant[]>;
@@ -24,49 +29,35 @@ export interface CatalogLookup {
 }
 
 export function buildCatalogLookup(catalog: GeesCatalog): CatalogLookup {
-  const menusById = new Map<EntityId, Menu>();
-  for (const menu of catalog.menus) {
-    menusById.set(menu.id, menu);
-  }
-
-  const subTypesById = new Map<EntityId, MenuSubType>();
-  for (const sub of catalog.menuSubTypes) {
-    subTypesById.set(sub.id, sub);
-  }
-
-  const itemsById = new Map<EntityId, MenuItem>();
-  for (const item of catalog.menuItems) {
-    itemsById.set(item.id, item);
-  }
-
-  const variantsById = new Map<EntityId, ItemVariant>();
-  const variantsByItemId = new Map<EntityId, ItemVariant[]>();
-  for (const variant of catalog.itemVariants) {
-    variantsById.set(variant.id, variant);
-    const list = variantsByItemId.get(variant.itemId) ?? [];
-    list.push(variant);
-    variantsByItemId.set(variant.itemId, list);
-  }
-  for (const [key, list] of variantsByItemId.entries()) {
-    variantsByItemId.set(
-      key,
-      [...list].sort((a, b) => a.sortOrder - b.sortOrder)
-    );
-  }
-
-  const addOnsById = new Map<EntityId, AddOn>();
-  for (const addOn of catalog.addOns) {
-    addOnsById.set(addOn.id, addOn);
-  }
-
+  const indexed = validateAndIndexCatalog(catalog);
   return {
-    menusById,
-    subTypesById,
-    itemsById,
-    variantsById,
-    variantsByItemId,
-    addOnsById,
+    menusById: indexed.menusById,
+    subTypesById: indexed.subTypesById,
+    subTypesByMenuId: indexed.subTypesByMenuId,
+    itemsById: indexed.itemsById,
+    variantsById: indexed.variantsById,
+    variantsByItemId: indexed.variantsByItemId,
+    addOnsById: indexed.addOnsById,
   };
+}
+
+export function resolveBaseUnitPrice(
+  lookup: CatalogLookup,
+  itemId: EntityId,
+  variantId: EntityId | null
+): number {
+  const item = lookup.itemsById.get(itemId);
+  if (!item) return 0;
+
+  if (variantId) {
+    const variant = lookup.variantsById.get(variantId);
+    return variant ? toInt(variant.price) : 0;
+  }
+  if (item.price !== null) {
+    return toInt(item.price);
+  }
+  const variants = lookup.variantsByItemId.get(itemId) ?? [];
+  return variants[0] ? toInt(variants[0].price) : 0;
 }
 
 /**
@@ -79,47 +70,49 @@ export function resolveLineUnitPrice(
   variantId: EntityId | null,
   addOnIds: ReadonlyArray<EntityId>
 ): number {
-  const item = lookup.itemsById.get(itemId);
-  if (!item) return 0;
-
-  let basePrice = 0;
-  if (variantId) {
-    const variant = lookup.variantsById.get(variantId);
-    basePrice = variant ? toInt(variant.price) : 0;
-  } else if (item.price !== null) {
-    basePrice = toInt(item.price);
-  } else {
-    const variants = lookup.variantsByItemId.get(itemId) ?? [];
-    if (variants[0]) {
-      basePrice = toInt(variants[0].price);
-    }
-  }
-
+  const basePrice = resolveBaseUnitPrice(lookup, itemId, variantId);
   const addOnAmounts = addOnIds.map((id) => {
     const addOn = lookup.addOnsById.get(id);
     return addOn ? addOn.price : '0';
   });
-
   return sum([basePrice, ...addOnAmounts]);
 }
 
 export function resolveLineTotalPrice(
   lookup: CatalogLookup,
-  line: Pick<OrderLinePayload, 'itemId' | 'variantId' | 'addOnIds' | 'quantity'>
+  line: Pick<
+    OrderLinePayload,
+    'itemId' | 'variantId' | 'addOnIds' | 'addOns' | 'quantity'
+  >
 ): number {
-  const unitPrice = resolveLineUnitPrice(
+  const baseUnitPrice = resolveBaseUnitPrice(
     lookup,
     line.itemId,
-    line.variantId,
-    line.addOnIds
+    line.variantId
   );
-  return multiply(unitPrice, line.quantity);
+  const baseTotal = multiply(baseUnitPrice, line.quantity);
+
+  if (line.addOns && line.addOns.length > 0) {
+    const addOnTotals = line.addOns.map((entry) => {
+      const addOn = lookup.addOnsById.get(entry.addOnId);
+      return addOn ? multiply(addOn.price, entry.qty) : 0;
+    });
+    return sum([baseTotal, ...addOnTotals]);
+  }
+
+  const addOnUnitTotal = sum(
+    line.addOnIds.map((id) => lookup.addOnsById.get(id)?.price ?? '0')
+  );
+  return sum([baseTotal, multiply(addOnUnitTotal, line.quantity)]);
 }
 
 export function resolveCartSubtotal(
   lookup: CatalogLookup,
   lines: ReadonlyArray<
-    Pick<OrderLinePayload, 'itemId' | 'variantId' | 'addOnIds' | 'quantity'>
+    Pick<
+      OrderLinePayload,
+      'itemId' | 'variantId' | 'addOnIds' | 'addOns' | 'quantity'
+    >
   >
 ): number {
   const lineTotals = lines.map((line) => resolveLineTotalPrice(lookup, line));
@@ -128,7 +121,7 @@ export function resolveCartSubtotal(
 
 export function resolveDeliveryFee(
   areas: ReadonlyArray<DeliveryArea>,
-  fulfillment: 'pickup' | 'delivery',
+  fulfillment: 'pickup' | 'delivery' | null,
   deliveryAreaId: EntityId | null,
   transportMode: 'bike' | 'car' | null
 ): number {
@@ -139,17 +132,31 @@ export function resolveDeliveryFee(
   return toInt(mode === 'car' ? area.carFee : area.bikeFee);
 }
 
-export function buildWhatsAppOrderMessage(
-  catalog: GeesCatalog,
-  areas: ReadonlyArray<DeliveryArea>,
-  payload: OrderSubmissionPayload
-): {
+export interface WhatsAppMessageBuildResult {
   messagePreview: string;
+  fullMessage: string;
   whatsappUrl: string;
   subtotal: number;
   deliveryFee: number;
   total: number;
-} {
+}
+
+/**
+ * Stage 5.4 buildWhatsAppMessage():
+ * Exact template:
+ * "Hello admin, my name is {fullName}, I ordered {items}. Total amount: {total}. Kindly send your account number for order payment. Order ref: {orderId}."
+ * - {items} = lines joined by "; " such as "3 × Fried Chicken (2 pcs) + 4 × Side of Rice"
+ * - For delivery append "; Delivery to {area} by {vehicle} (₦fee)"
+ * - {total} is ₦55,000 and includes any delivery fee
+ * - encodeURIComponent always
+ * - Cap at about 1,800 characters by collapsing to "… and N more items" (full list stored with order)
+ * - Until the order exists the preview shows "Order ref: (assigned on send)"
+ */
+export function buildWhatsAppOrderMessage(
+  catalog: GeesCatalog,
+  areas: ReadonlyArray<DeliveryArea>,
+  payload: OrderSubmissionPayload
+): WhatsAppMessageBuildResult {
   const lookup = buildCatalogLookup(catalog);
   const subtotal = resolveCartSubtotal(lookup, payload.lines);
   const deliveryFee = resolveDeliveryFee(
@@ -160,65 +167,85 @@ export function buildWhatsAppOrderMessage(
   );
   const total = sum([subtotal, deliveryFee]);
 
-  const itemLines = payload.lines.map((line, index) => {
+  const itemStrings = payload.lines.map((line) => {
     const item = lookup.itemsById.get(line.itemId);
     const variant = line.variantId
       ? lookup.variantsById.get(line.variantId)
       : undefined;
-    const addOns = line.addOnIds
-      .map((id) => lookup.addOnsById.get(id))
-      .filter((a): a is AddOn => Boolean(a));
+
+    let addOnPart = '';
+    if (line.addOns && line.addOns.length > 0) {
+      const formattedAddOns = line.addOns
+        .map((entry) => {
+          const addOn = lookup.addOnsById.get(entry.addOnId);
+          return addOn ? `${entry.qty} × ${addOn.name}` : null;
+        })
+        .filter((s): s is string => Boolean(s));
+      if (formattedAddOns.length > 0) {
+        addOnPart = ` + ${formattedAddOns.join(' + ')}`;
+      }
+    } else if (line.addOnIds.length > 0) {
+      const addOns = line.addOnIds
+        .map((id) => lookup.addOnsById.get(id))
+        .filter((a): a is AddOn => Boolean(a));
+      if (addOns.length > 0) {
+        addOnPart = ` + ${addOns.map((a) => `1 × ${a.name}`).join(' + ')}`;
+      }
+    }
 
     const titlePart = item ? item.item : line.itemId;
     const variantPart = variant ? ` (${variant.label})` : '';
-    const addOnPart =
-      addOns.length > 0
-        ? ` + ${addOns.map((a) => a.name).join(', ')}`
-        : '';
-    const lineTotal = resolveLineTotalPrice(lookup, line);
 
-    return `${index + 1}. ${line.quantity}x ${titlePart}${variantPart}${addOnPart} — ${formatNaira(lineTotal)}`;
+    return `${line.quantity} × ${titlePart}${variantPart}${addOnPart}`;
   });
 
   const area = payload.deliveryAreaId
     ? areas.find((a) => a.id === payload.deliveryAreaId)
     : undefined;
 
-  const fulfillmentLines =
+  const deliverySuffix =
     payload.fulfillment === 'delivery'
-      ? [
-          `Fulfillment: Delivery (${payload.transportMode === 'car' ? 'Car' : 'Bike'})`,
-          `Area: ${area ? area.name : 'Selected Area'}`,
-          `Address: ${payload.address || 'N/A'}`,
-          payload.landmark ? `Landmark: ${payload.landmark}` : null,
-        ].filter(Boolean)
-      : [
-          'Fulfillment: Pickup',
-          'Pickup Address: No. 32 Bompai Road, opposite Grand Square, Kano',
-        ];
+      ? `; Delivery to ${area ? area.name : 'Selected Area'} by ${
+          payload.transportMode === 'car' ? 'Car' : 'Bike'
+        } (${formatNaira(deliveryFee)})`
+      : '';
 
-  const blocks = [
-    `*GEE'S BURGER ORDER — #${payload.orderId}*`,
-    '',
-    '*Items:*',
-    ...itemLines,
-    '',
-    `Subtotal: ${formatNaira(subtotal)}`,
-    payload.fulfillment === 'delivery'
-      ? `Delivery Fee: ${formatNaira(deliveryFee)}`
-      : 'Delivery Fee: ₦0 (Pickup)',
-    `*Total: ${formatNaira(total)}*`,
-    '',
-    '*Customer Details:*',
-    `Name: ${payload.customerName}`,
-    `Phone: ${payload.customerPhone}`,
-    ...fulfillmentLines,
-    payload.notes ? `Note: ${payload.notes}` : null,
-  ].filter((line): line is string => line !== null);
+  const fullNameText = (payload.customerName || '').trim() || 'Customer';
+  const rawOrderId = (payload.orderId || '').trim();
+  const isAssignedOrder =
+    rawOrderId.length > 0 &&
+    rawOrderId !== 'PREVIEW' &&
+    rawOrderId !== '(assigned on send)';
+  const orderRefValue = isAssignedOrder ? rawOrderId : '(assigned on send)';
 
-  const messagePreview = blocks.join('\n');
-  const rawNumber =
-    process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '2349166606000';
+  const composeSentence = (itemsText: string): string =>
+    `Hello admin, my name is ${fullNameText}, I ordered ${itemsText}${deliverySuffix}. Total amount: ${formatNaira(
+      total
+    )}. Kindly send your account number for order payment. Order ref: ${orderRefValue}.`;
+
+  const fullItemsText =
+    itemStrings.length > 0 ? itemStrings.join('; ') : 'no items';
+  const fullMessage = composeSentence(fullItemsText);
+
+  let messagePreview = fullMessage;
+  if (
+    messagePreview.length > MAX_WHATSAPP_MESSAGE_LENGTH &&
+    itemStrings.length > 1
+  ) {
+    for (let keep = itemStrings.length - 1; keep >= 1; keep--) {
+      const remaining = itemStrings.length - keep;
+      const collapsedItems = `${itemStrings
+        .slice(0, keep)
+        .join('; ')}; … and ${remaining} more items`;
+      const candidate = composeSentence(collapsedItems);
+      messagePreview = candidate;
+      if (candidate.length <= MAX_WHATSAPP_MESSAGE_LENGTH) {
+        break;
+      }
+    }
+  }
+
+  const rawNumber = siteConfig.adminWhatsapp;
   const cleanNumber = rawNumber.replace(/[^\d]/g, '') || '2349166606000';
   const whatsappUrl = `https://wa.me/${cleanNumber}?text=${encodeURIComponent(
     messagePreview
@@ -226,9 +253,12 @@ export function buildWhatsAppOrderMessage(
 
   return {
     messagePreview,
+    fullMessage,
     whatsappUrl,
     subtotal,
     deliveryFee,
     total,
   };
 }
+
+export const buildWhatsAppMessage = buildWhatsAppOrderMessage;
