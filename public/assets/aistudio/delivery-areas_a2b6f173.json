@@ -1,0 +1,82 @@
+[
+  {
+    "id": "area_bompai",
+    "name": "Bompai",
+    "bikeFee": "500",
+    "carFee": "1000",
+    "isActive": true,
+    "_placeholder": true
+  },
+  {
+    "id": "area_nassarawa_gra",
+    "name": "Nassarawa GRA",
+    "bikeFee": "800",
+    "carFee": "1500",
+    "isActive": true,
+    "_placeholder": true
+  },
+  {
+    "id": "area_sabon_gari",
+    "name": "Sabon Gari",
+    "bikeFee": "1000",
+    "carFee": "1800",
+    "isActive": true,
+    "_placeholder": true
+  },
+  {
+    "id": "area_zoo_road",
+    "name": "Zoo Road",
+    "bikeFee": "1200",
+    "carFee": "2000",
+    "isActive": true,
+    "_placeholder": true
+  },
+  {
+    "id": "area_fagge",
+    "name": "Fagge",
+    "bikeFee": "1200",
+    "carFee": "2000",
+    "isActive": true,
+    "_placeholder": true
+  },
+  {
+    "id": "area_gwale",
+    "name": "Gwale",
+    "bikeFee": "1300",
+    "carFee": "2200",
+    "isActive": true,
+    "_placeholder": true
+  },
+  {
+    "id": "area_tarauni",
+    "name": "Tarauni",
+    "bikeFee": "1500",
+    "carFee": "2500",
+    "isActive": true,
+    "_placeholder": true
+  },
+  {
+    "id": "area_sharada",
+    "name": "Sharada",
+    "bikeFee": "1500",
+    "carFee": "2500",
+    "isActive": true,
+    "_placeholder": true
+  },
+  {
+    "id": "area_dorayi",
+    "name": "Dorayi",
+    "bikeFee": "1800",
+    "carFee": "3000",
+    "isActive": true,
+    "_placeholder": true
+  },
+  {
+    "id": "area_hotoro",
+    "name": "Hotoro",
+    "bikeFee": "2000",
+    "carFee": "3500",
+    "isActive": true,
+    "_placeholder": true
+  }
+]

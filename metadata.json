@@ -1,0 +1,6 @@
+{
+  "name": "Gee's Burger",
+  "description": "Order Gee's Burger online in Kano — burgers, sliders, fried chicken, shawarma, Lebanese platters, milkshakes and desserts via WhatsApp.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

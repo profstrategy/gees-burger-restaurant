@@ -1,0 +1,85 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+:root {
+  --gb-black: #101010;
+  --gb-surface: #161616;
+  --gb-yellow: #F8E010;
+  --gb-splash: #F8E850;
+  --gb-white: #F8F8F8;
+  --gb-soft: #E6E6E6;
+  --gb-ash: #6B6B6B;
+  --gb-red: #E10600;
+}
+
+@layer base {
+  html {
+    background-color: var(--gb-black);
+    color: var(--gb-white);
+    color-scheme: dark;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--gb-black);
+    color: var(--gb-white);
+    font-family: var(--font-poppins), sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, .font-display {
+    font-family: var(--font-bebas), sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+}
+
+.gb-stage {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.gb-stain {
+  position: absolute;
+  pointer-events: none;
+  z-index: -1;
+  user-select: none;
+  opacity: 0.16;
+}
+
+.gb-stain-top-left {
+  top: 0;
+  left: 0;
+  width: clamp(90px, 18vw, 244px);
+}
+
+.gb-stain-top-right {
+  top: 0;
+  right: 0;
+  width: clamp(120px, 26vw, 349px);
+}
+
+.gb-stain-bottom-left {
+  bottom: 2rem;
+  left: 0;
+  width: clamp(70px, 12vw, 156px);
+}
+
+@media (max-width: 479px) {
+  .gb-stain-secondary {
+    display: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

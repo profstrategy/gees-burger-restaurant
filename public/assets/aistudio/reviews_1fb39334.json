@@ -1,0 +1,58 @@
+[
+  {
+    "id": "rev_1",
+    "name": "Emmanuel Adejokun",
+    "rating": 5,
+    "text": "Beautiful place with good food and cheerful staff.",
+    "source": "google"
+  },
+  {
+    "id": "rev_2",
+    "name": "Aliadam005 Spoode",
+    "rating": 5,
+    "text": "The best restaurant in Kano is a hidden gem! The food and drinks are amazing and the service is impeccable. You won’t find a better dining experience anywhere else.",
+    "source": "google"
+  },
+  {
+    "id": "rev_3",
+    "name": "Isabella Ojeah-Onucheojo",
+    "rating": 4,
+    "text": "Friendly staff, great atmosphere, cool selection of music, and plenty of parking space.\nI enjoyed the smoothie I had... forgotten the name but it's a combination of banana and another fruit.",
+    "source": "google"
+  },
+  {
+    "id": "rev_4",
+    "name": "Peter Paroski Odey",
+    "rating": 5,
+    "text": "Very interesting place to be.",
+    "source": "google"
+  },
+  {
+    "id": "rev_5",
+    "name": "Rabi Abdullahi",
+    "rating": 4,
+    "text": "A very comfortable environment with a high quality service . Kids menu  and a very lovely atmosphere. Their food and snacks are second to none",
+    "source": "google"
+  },
+  {
+    "id": "rev_6",
+    "name": "Ali Raza",
+    "rating": 5,
+    "text": "Very delicious taste,good atmosphere, economical rates ,highly recommended..batter than KFC and Other food brands  best burger in Kano ..keep it up guys .",
+    "source": "google"
+  },
+  {
+    "id": "rev_7",
+    "name": "Ezeobi Williams",
+    "rating": 4,
+    "text": "Cool place to take yourself and loved ones out",
+    "source": "google"
+  },
+  {
+    "id": "rev_8",
+    "name": "Habip Akbulak",
+    "rating": 5,
+    "text": "a very nice Lebanese restaurant. the waiters and other employees are very kind.",
+    "source": "google"
+  }
+]

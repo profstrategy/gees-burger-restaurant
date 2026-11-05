@@ -1,0 +1,50 @@
+[
+  {
+    "id": "faq_1",
+    "question": "How do I place an order?",
+    "answer": "Add your items to the cart, choose Pickup or Delivery, fill in your details and tap Order via WhatsApp. Your order is sent to our team on WhatsApp and we reply with the account number for payment.",
+    "needsClientConfirmation": false
+  },
+  {
+    "id": "faq_2",
+    "question": "Do you deliver, and what does delivery cost?",
+    "answer": "Yes, to selected areas of Kano. The fee depends on your area and whether the rider comes by bike or car. You see the exact fee at checkout before you order.",
+    "needsClientConfirmation": false
+  },
+  {
+    "id": "faq_3",
+    "question": "Can I pick up my order?",
+    "answer": "Yes. Choose Pickup at checkout and collect it from No. 32 Bompai Road, opposite Grand Square, Kano.",
+    "needsClientConfirmation": false
+  },
+  {
+    "id": "faq_4",
+    "question": "Do you have a kids menu?",
+    "answer": "Yes. The Kids Meal has chicken strips, a beef slider, a chicken slider and chicken nuggets, each served with a juice and fries (the chicken strips can come with rice instead).",
+    "needsClientConfirmation": false
+  },
+  {
+    "id": "faq_5",
+    "question": "What drinks do you serve?",
+    "answer": "Cold and hot drinks, mocktails such as Chapman and Virgin Mojito, and eleven milkshake flavours including Oreo, Lotus and Strawberry.",
+    "needsClientConfirmation": false
+  },
+  {
+    "id": "faq_6",
+    "question": "Do you only serve burgers?",
+    "answer": "No. Alongside burgers, sliders and fried chicken we serve wings, sandwiches and wraps, shawarma, Lebanese-style grills such as kafta and tawouk, falafel, soups, salads, rice dishes and desserts.",
+    "needsClientConfirmation": false
+  },
+  {
+    "id": "faq_7",
+    "question": "Which dishes are spicy?",
+    "answer": "Spicy dishes carry a red chili icon on the menu: Buffalo Wings, Buffalo Strips, Spicy Chicken Cheetos, the Buffalo Chicken slider and the Buffalo Chicken Wrap.",
+    "needsClientConfirmation": false
+  },
+  {
+    "id": "faq_8",
+    "question": "What is the place like, and is there parking?",
+    "answer": "Guests describe a comfortable atmosphere, friendly staff and good music, and one guest mentions plenty of parking space. Call 09166606000 if you want to check before you come.",
+    "needsClientConfirmation": true
+  }
+]
