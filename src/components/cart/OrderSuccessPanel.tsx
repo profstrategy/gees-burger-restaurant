@@ -24,28 +24,28 @@ export function OrderSuccessPanel({
     <section
       role="region"
       aria-label="Order sent"
-      className="rounded-3xl border border-[#F8E010] bg-[#161616] p-6 sm:p-10 space-y-6"
+      className="rounded-3xl border border-accent-text bg-surface p-6 sm:p-10 space-y-6"
     >
       <div className="flex items-start gap-4">
-        <CheckCircle2 className="h-8 w-8 text-[#F8E010] shrink-0 mt-1" />
+        <CheckCircle2 className="h-8 w-8 text-accent-text shrink-0 mt-1" />
         <div className="space-y-1.5">
-          <p className="text-xs font-semibold uppercase tracking-widest text-[#F8E010]">
+          <p className="text-xs font-semibold uppercase tracking-widest text-accent-text">
             Ref: #{result.orderId}
           </p>
-          <h2 className="font-display text-4xl sm:text-5xl text-[#F8E010]">
+          <h2 className="font-display text-4xl sm:text-5xl text-accent-text">
             Order sent
           </h2>
-          <p className="text-sm text-[#E6E6E6]">
-            Your order reference is <strong className="text-[#F8F8F8]">#{result.orderId}</strong>.
+          <p className="text-sm text-text-soft">
+            Your order reference is <strong className="text-text">#{result.orderId}</strong>.
             If WhatsApp did not open automatically, tap &ldquo;Open WhatsApp&rdquo; below to send your order message.
           </p>
         </div>
       </div>
 
-      <div className="rounded-xl border border-white/10 bg-[#101010] p-4">
+      <div className="rounded-xl border border-border-subtle bg-bg p-4">
         <pre
           aria-readonly="true"
-          className="text-xs text-[#F8F8F8] whitespace-pre-wrap font-mono leading-relaxed max-h-60 overflow-y-auto"
+          className="text-xs text-text whitespace-pre-wrap font-mono leading-relaxed max-h-60 overflow-y-auto"
         >
           {result.messagePreview}
         </pre>
@@ -56,7 +56,7 @@ export function OrderSuccessPanel({
           href={result.whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex-1 inline-flex items-center justify-center gap-2 min-h-[48px] rounded-xl bg-[#F8E010] px-6 py-3 text-base font-bold text-[#101010] hover:bg-[#F8E850] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F8E010] whitespace-nowrap shrink-0"
+          className="flex-1 inline-flex items-center justify-center gap-2 min-h-[48px] rounded-xl bg-brand px-6 py-3 text-base font-bold text-on-brand hover:bg-brand-splash transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring whitespace-nowrap shrink-0"
         >
           <MessageCircle className="h-5 w-5 shrink-0" />
           <span>Open WhatsApp</span>

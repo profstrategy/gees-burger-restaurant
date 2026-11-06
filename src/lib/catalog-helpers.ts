@@ -246,7 +246,17 @@ export function buildWhatsAppOrderMessage(
   }
 
   const rawNumber = siteConfig.adminWhatsapp;
-  const cleanNumber = rawNumber.replace(/[^\d]/g, '') || '2349166606000';
+  const cleanNumber = rawNumber?.replace(/[^\d]/g, '');
+  if (!cleanNumber) {
+    const errorMessage =
+      'WhatsApp routing number is missing. Set NEXT_PUBLIC_ADMIN_WHATSAPP.';
+    if (process.env.NODE_ENV === 'development') {
+      throw new Error(errorMessage);
+    }
+    console.warn(errorMessage);
+    throw new Error(errorMessage);
+  }
+
   const whatsappUrl = `https://wa.me/${cleanNumber}?text=${encodeURIComponent(
     messagePreview
   )}`;

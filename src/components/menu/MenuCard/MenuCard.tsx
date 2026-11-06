@@ -50,7 +50,7 @@ function VariantPicker({
     <div className="space-y-2">
       <span
         id={`variant-label-${itemId}`}
-        className="block text-[11px] font-semibold uppercase tracking-wider text-[#E6E6E6]"
+        className="block text-[11px] font-semibold uppercase tracking-wider text-text-soft"
       >
         Choose variant:
       </span>
@@ -72,12 +72,12 @@ function VariantPicker({
               disabled={isDisabled}
               onClick={() => onSelectVariant(v.id)}
               className={cn(
-                'flex items-center justify-between gap-1.5 min-h-[44px] px-3 py-2 rounded-xl text-xs font-medium transition-colors text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F8E010]',
+                'flex items-center justify-between gap-1.5 min-h-[44px] px-3 py-2 rounded-xl text-xs font-medium transition-colors text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring',
                 isSelected
-                  ? 'bg-[#F8E010] text-[#101010] font-bold border border-[#F8E010]'
-                  : 'bg-[#101010] text-[#F8F8F8] border border-white/15 hover:border-[#F8E010]/60 cursor-pointer',
+                  ? 'bg-brand text-on-brand font-bold border-2 border-accent-text'
+                  : 'bg-bg text-text border border-border hover:border-border-hover cursor-pointer',
                 v.disabled &&
-                  'line-through opacity-45 cursor-not-allowed hover:border-white/15',
+                  'line-through opacity-45 cursor-not-allowed hover:border-border',
                 isSoldOut && 'cursor-not-allowed'
               )}
             >
@@ -85,8 +85,8 @@ function VariantPicker({
               <span
                 className={cn(
                   'tabular-nums shrink-0 font-bold',
-                  isSelected ? 'text-[#101010]' : 'text-[#F8E010]',
-                  v.disabled && 'line-through text-[#6B6B6B]'
+                  isSelected ? 'text-on-brand' : 'text-accent-text',
+                  v.disabled && 'line-through text-text-disabled'
                 )}
               >
                 {v.formattedPrice}
@@ -119,7 +119,7 @@ function AddOnPicker({
 
   return (
     <div className="space-y-2">
-      <span className="block text-[11px] font-semibold uppercase tracking-wider text-[#E6E6E6]">
+      <span className="block text-[11px] font-semibold uppercase tracking-wider text-text-soft">
         Choose add-ons:
       </span>
       <div className="flex flex-col gap-2">
@@ -136,21 +136,21 @@ function AddOnPicker({
                 disabled={isDisabled}
                 onClick={() => handlers.toggleAddOn(addOn.id)}
                 className={cn(
-                  'inline-flex items-center gap-1.5 min-h-[44px] px-3.5 py-1.5 rounded-full text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F8E010]',
+                  'inline-flex items-center gap-1.5 min-h-[44px] px-3.5 py-1.5 rounded-full text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring',
                   addOn.selected
-                    ? 'bg-[#F8E850]/20 text-[#F8E010] border border-[#F8E010] font-semibold cursor-pointer'
-                    : 'bg-[#101010] text-[#E6E6E6] border border-white/15 hover:border-[#F8E010]/50 cursor-pointer',
+                    ? 'bg-brand-splash/20 text-accent-text border-2 border-accent-text font-semibold cursor-pointer'
+                    : 'bg-bg text-text-soft border border-border hover:border-border-hover cursor-pointer',
                   isDisabled &&
-                    'opacity-45 line-through cursor-not-allowed hover:border-white/15'
+                    'opacity-45 line-through cursor-not-allowed hover:border-border'
                 )}
               >
                 {addOn.selected ? (
-                  <Check className="h-3.5 w-3.5 text-[#F8E010] shrink-0" />
+                  <Check className="h-3.5 w-3.5 text-accent-text shrink-0" />
                 ) : (
-                  <Plus className="h-3.5 w-3.5 text-[#F8E010] shrink-0" />
+                  <Plus className="h-3.5 w-3.5 text-accent-text shrink-0" />
                 )}
                 <span>{addOn.name}</span>
-                <span className="tabular-nums font-bold text-[#F8E010]">
+                <span className="tabular-nums font-bold text-accent-text">
                   +{addOn.formattedPrice}
                 </span>
               </button>
@@ -159,20 +159,20 @@ function AddOnPicker({
                 <div
                   role="group"
                   aria-label={`${addOn.name} quantity stepper for ${itemName}`}
-                  className="inline-flex items-center gap-1 rounded-full bg-[#101010] p-1 border border-[#F8E010]/40"
+                  className="inline-flex items-center gap-1 rounded-full bg-bg p-1 border border-border"
                 >
                   <button
                     type="button"
                     aria-label={`Decrease ${addOn.name} quantity for ${itemName}`}
                     disabled={addOn.qty <= MIN_CART_QTY}
                     onClick={() => handlers.decrementAddOnQty(addOn.id)}
-                    className="inline-flex items-center justify-center min-h-[44px] min-w-[44px] rounded-full bg-[#161616] text-[#F8F8F8] hover:bg-[#F8E010] hover:text-[#101010] disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F8E010]"
+                    className="inline-flex items-center justify-center min-h-[44px] min-w-[44px] rounded-full bg-surface text-text hover:bg-brand hover:text-on-brand disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
                   >
                     <Minus className="h-3.5 w-3.5" />
                   </button>
                   <span
                     aria-live="polite"
-                    className="min-w-[26px] text-center font-bold text-xs text-[#F8E010] tabular-nums"
+                    className="min-w-[26px] text-center font-bold text-xs text-accent-text tabular-nums"
                   >
                     {addOn.qty}
                   </span>
@@ -181,7 +181,7 @@ function AddOnPicker({
                     aria-label={`Increase ${addOn.name} quantity for ${itemName}`}
                     disabled={addOn.qty >= MAX_CART_QTY}
                     onClick={() => handlers.incrementAddOnQty(addOn.id)}
-                    className="inline-flex items-center justify-center min-h-[44px] min-w-[44px] rounded-full bg-[#F8E010] text-[#101010] hover:bg-[#F8E850] disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F8E010]"
+                    className="inline-flex items-center justify-center min-h-[44px] min-w-[44px] rounded-full bg-brand text-on-brand hover:bg-brand-splash disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
                   >
                     <Plus className="h-3.5 w-3.5" />
                   </button>
@@ -239,7 +239,7 @@ export const MenuCard = memo(function MenuCard({
       )}
     >
       {/* Top 16:10 Media Frame */}
-      <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#101010] flex items-center justify-center">
+      <div className="relative aspect-[16/10] w-full overflow-hidden bg-bg flex items-center justify-center">
         {resolvedImage ? (
           <Image
             src={resolvedImage}
@@ -254,16 +254,16 @@ export const MenuCard = memo(function MenuCard({
           />
         ) : (
           /* No photo / fallback: black panel, centred logo (min width 120px), soft yellow glow disc, no corner shape */
-          <div className="relative flex h-full w-full items-center justify-center bg-[#101010]">
+          <div className="relative flex h-full w-full items-center justify-center bg-fixed-dark-bg">
             <div
               aria-hidden="true"
-              className="pointer-events-none absolute h-32 w-32 rounded-full bg-[#F8E010]/15 blur-2xl"
+              className="pointer-events-none absolute h-32 w-32 rounded-full bg-brand/15 blur-2xl"
             />
             <Image
               src="/brand/gees-burger-logo.webp"
               alt={`${name} — Gee's Burger`}
-              width={120}
-              height={158}
+              width={800}
+              height={1134}
               loading={priority ? 'eager' : 'lazy'}
               referrerPolicy="no-referrer"
               className="relative z-10 min-w-[120px] w-[120px] h-auto object-contain opacity-90 select-none"
@@ -274,7 +274,7 @@ export const MenuCard = memo(function MenuCard({
         {/* Badges Overlay */}
         <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-2 pointer-events-none z-20">
           {isSpicy ? (
-            <span className="inline-flex items-center gap-1 rounded-md bg-[#E10600] px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-[#F8F8F8] shadow-md">
+            <span className="inline-flex items-center gap-1 rounded-md bg-danger px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-on-danger shadow-md">
               <Flame className="h-3.5 w-3.5 fill-current shrink-0" />
               <span>Spicy</span>
             </span>
@@ -283,7 +283,7 @@ export const MenuCard = memo(function MenuCard({
           )}
 
           {isSoldOut && (
-            <span className="inline-flex items-center rounded-md border border-[#F8F8F8]/60 bg-[#101010]/90 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-[#F8F8F8]">
+            <span className="inline-flex items-center rounded-md border border-border bg-bg/90 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-text">
               Sold out
             </span>
           )}
@@ -295,22 +295,22 @@ export const MenuCard = memo(function MenuCard({
         <div className="space-y-3">
           {/* Title & Price Header */}
           <div className="flex items-start justify-between gap-3">
-            <h3 className="font-display text-2xl sm:text-[26px] leading-[1.05] text-[#F8E010] tracking-wide">
+            <h3 className="font-display text-2xl sm:text-[26px] leading-[1.05] text-accent-text tracking-wide">
               {name}
             </h3>
 
             <div className="text-right shrink-0">
               {showCollapsibleHeaderPrice ? (
                 <div className="flex flex-col items-end">
-                  <span className="font-bold text-lg text-[#F8E010] tabular-nums whitespace-nowrap">
+                  <span className="font-bold text-lg text-accent-text tabular-nums whitespace-nowrap">
                     from {firstVariantHint.formattedPrice}
                   </span>
-                  <span className="text-[11px] text-[#E6E6E6]/75">
+                  <span className="text-[11px] text-text-soft/75">
                     from {firstVariantHint.label}
                   </span>
                 </div>
               ) : (
-                <span className="font-bold text-lg sm:text-xl text-[#F8E010] tabular-nums whitespace-nowrap">
+                <span className="font-bold text-lg sm:text-xl text-accent-text tabular-nums whitespace-nowrap">
                   {formattedUnitPrice}
                 </span>
               )}
@@ -320,7 +320,7 @@ export const MenuCard = memo(function MenuCard({
           {/* Description: shown for Layouts A, D, and E (when composition exists) */}
           {(layout === 'A' || layout === 'D' || layout === 'E') &&
             composition && (
-              <p className="text-xs sm:text-sm text-[#E6E6E6]/85 leading-relaxed">
+              <p className="text-xs sm:text-sm text-text-soft/85 leading-relaxed">
                 {composition}
               </p>
             )}
@@ -334,7 +334,7 @@ export const MenuCard = memo(function MenuCard({
                 disabled={isSoldOut}
                 onClick={handlers.toggleExpanded}
                 className={cn(
-                  'flex w-full items-center justify-between gap-2 min-h-[44px] rounded-xl border border-white/15 bg-[#101010] px-3.5 py-2 text-xs font-semibold text-[#F8F8F8] hover:border-[#F8E010]/60 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F8E010]',
+                  'flex w-full items-center justify-between gap-2 min-h-[44px] rounded-xl border border-border bg-bg px-3.5 py-2 text-xs font-semibold text-text hover:border-border-hover transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring',
                   isSoldOut && 'cursor-not-allowed opacity-50'
                 )}
               >
@@ -346,14 +346,14 @@ export const MenuCard = memo(function MenuCard({
                     : 'Customize options'}
                 </span>
                 {isExpanded ? (
-                  <ChevronUp className="h-4 w-4 text-[#F8E010] shrink-0" />
+                  <ChevronUp className="h-4 w-4 text-accent-text shrink-0" />
                 ) : (
-                  <ChevronDown className="h-4 w-4 text-[#F8E010] shrink-0" />
+                  <ChevronDown className="h-4 w-4 text-accent-text shrink-0" />
                 )}
               </button>
 
               {isExpanded && (
-                <div className="space-y-3 rounded-xl border border-white/10 bg-[#101010]/60 p-3">
+                <div className="space-y-3 rounded-xl border border-border-subtle bg-bg/60 p-3">
                   <VariantPicker
                     itemId={itemId}
                     itemName={name}
@@ -407,25 +407,25 @@ export const MenuCard = memo(function MenuCard({
         </div>
 
         {/* Bottom Action Row: Item Quantity Stepper (1–50) + Dirty-Yellow Add Button */}
-        <div className="pt-3 border-t border-white/10 flex items-center justify-between gap-3">
+        <div className="pt-3 border-t border-border-subtle flex items-center justify-between gap-3">
           {/* Quantity Stepper */}
           <div
             role="group"
             aria-label={`Quantity stepper for ${name}`}
-            className="flex items-center gap-1 rounded-xl bg-[#101010] p-1 border border-white/15 shrink-0"
+            className="flex items-center gap-1 rounded-xl bg-bg p-1 border border-border shrink-0"
           >
             <button
               type="button"
               aria-label={`Decrease quantity for ${name}`}
               disabled={isSoldOut || qty <= MIN_CART_QTY}
               onClick={handlers.decrementQty}
-              className="inline-flex items-center justify-center min-h-[44px] min-w-[44px] rounded-lg bg-[#161616] text-[#F8F8F8] hover:bg-[#F8E010] hover:text-[#101010] disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F8E010]"
+              className="inline-flex items-center justify-center min-h-[44px] min-w-[44px] rounded-lg bg-surface text-text hover:bg-brand hover:text-on-brand disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
             >
               <Minus className="h-4 w-4" />
             </button>
             <span
               aria-live="polite"
-              className="min-w-[30px] text-center font-bold text-sm text-[#F8F8F8] tabular-nums"
+              className="min-w-[30px] text-center font-bold text-sm text-text tabular-nums"
             >
               {qty}
             </span>
@@ -434,7 +434,7 @@ export const MenuCard = memo(function MenuCard({
               aria-label={`Increase quantity for ${name}`}
               disabled={isSoldOut || qty >= MAX_CART_QTY}
               onClick={handlers.incrementQty}
-              className="inline-flex items-center justify-center min-h-[44px] min-w-[44px] rounded-lg bg-[#F8E010] text-[#101010] hover:bg-[#F8E850] disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F8E010]"
+              className="inline-flex items-center justify-center min-h-[44px] min-w-[44px] rounded-lg bg-brand text-on-brand hover:bg-brand-splash disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
             >
               <Plus className="h-4 w-4" />
             </button>

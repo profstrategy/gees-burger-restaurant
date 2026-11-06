@@ -24,11 +24,7 @@ const sizeClasses: Record<GbButtonSize, string> = {
 };
 
 /**
- * Dirty-yellow button (variants: `primary` and `ghost`):
- * - Black base with a low-opacity smudged yellow brush texture behind the label
- * - 1 px yellow border, white label
- * - ::before pseudo-element wipes left-to-right into solid #F8E010 on hover,
- *   focus-visible, and active while the label transitions to #101010 black
+ * Branded button variants retain a fixed dark base and wipe to the brand fill.
  * - Includes loading and disabled states
  */
 export const GbButton = React.forwardRef<HTMLButtonElement, GbButtonProps>(

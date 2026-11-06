@@ -46,12 +46,12 @@ export function SectionHeading({
       )}
     >
       {label && (
-        <p className="text-xs font-semibold uppercase tracking-widest text-[#F8E010]">
+        <p className="text-xs font-semibold uppercase tracking-widest text-accent-text">
           {label}
         </p>
       )}
 
-      <Tag className="font-display text-4xl sm:text-5xl text-[#F8E010] leading-none tracking-wide text-balance">
+      <Tag className="font-display text-4xl sm:text-5xl text-accent-text leading-none tracking-wide text-balance">
         {title}
       </Tag>
 
@@ -65,13 +65,13 @@ export function SectionHeading({
       >
         <span
           className={cn(
-            'h-[1.5px] w-24 sm:w-28 bg-gradient-to-l from-[#F8E010] to-transparent origin-right transition-all duration-[600ms] ease-out',
+            'h-[1.5px] w-24 sm:w-28 bg-gradient-to-l from-brand to-transparent origin-right transition-all duration-[600ms] ease-out',
             inView ? 'scale-x-100 opacity-100' : 'scale-x-0 opacity-0'
           )}
         />
         <span
           className={cn(
-            'text-sm leading-none text-[#F8E010] select-none transition-opacity duration-300',
+            'text-sm leading-none text-accent-text select-none transition-opacity duration-300',
             inView ? 'opacity-100' : 'opacity-40'
           )}
         >
@@ -79,14 +79,14 @@ export function SectionHeading({
         </span>
         <span
           className={cn(
-            'h-[1.5px] w-24 sm:w-28 bg-gradient-to-r from-[#F8E010] to-transparent origin-left transition-all duration-[600ms] ease-out',
+            'h-[1.5px] w-24 sm:w-28 bg-gradient-to-r from-brand to-transparent origin-left transition-all duration-[600ms] ease-out',
             inView ? 'scale-x-100 opacity-100' : 'scale-x-0 opacity-0'
           )}
         />
       </div>
 
       {subtitle && (
-        <p className="text-sm sm:text-base text-[#E6E6E6] max-w-2xl leading-relaxed">
+        <p className="text-sm sm:text-base text-text-soft max-w-2xl leading-relaxed">
           {subtitle}
         </p>
       )}

@@ -47,7 +47,7 @@ export function FoundationShowcase() {
         <div className="lg:col-span-5 flex">
           <OrbitCard className="w-full p-6 flex flex-col justify-between gap-5">
             <div className="space-y-4">
-              <div className="relative aspect-[4/3] w-full rounded-xl bg-[#101010] overflow-hidden flex items-center justify-center">
+              <div className="relative aspect-[4/3] w-full rounded-xl bg-bg overflow-hidden flex items-center justify-center">
                 {sampleItem?.imageUrl ? (
                   <Image
                     src={sampleItem.imageUrl}
@@ -58,16 +58,16 @@ export function FoundationShowcase() {
                     className="object-cover"
                   />
                 ) : (
-                  <div className="relative flex items-center justify-center w-full h-full bg-[#101010]">
+                  <div className="relative flex items-center justify-center w-full h-full bg-fixed-dark-bg">
                     <div
                       aria-hidden="true"
-                      className="pointer-events-none absolute h-32 w-32 rounded-full bg-[#F8E010]/15 blur-2xl"
+                      className="pointer-events-none absolute h-32 w-32 rounded-full bg-brand/15 blur-2xl"
                     />
                     <Image
                       src="/brand/gees-burger-logo.webp"
                       alt="Gee's Burger"
-                      width={120}
-                      height={158}
+                      width={800}
+                      height={1134}
                       referrerPolicy="no-referrer"
                       className="relative z-10 w-[120px] min-w-[120px] h-auto object-contain"
                     />
@@ -76,20 +76,20 @@ export function FoundationShowcase() {
               </div>
 
               <div className="flex items-baseline justify-between gap-3">
-                <h3 className="font-display text-3xl text-[#F8E010]">
+                <h3 className="font-display text-3xl text-accent-text">
                   {sampleItem?.item ?? 'Classic Beef Burger'}
                 </h3>
-                <span className="font-bold text-xl text-[#F8E010] tabular-nums">
+                <span className="font-bold text-xl text-accent-text tabular-nums">
                   {formatNaira(sampleItem?.price ?? '10000')}
                 </span>
               </div>
 
-              <p className="text-sm text-[#E6E6E6] leading-relaxed">
+              <p className="text-sm text-text-soft leading-relaxed">
                 {sampleItem?.composition}
               </p>
             </div>
 
-            <div className="pt-2 border-t border-white/10 flex items-center justify-between text-xs text-[#E6E6E6]/75">
+            <div className="pt-2 border-t border-border-subtle flex items-center justify-between text-xs text-text-soft/75">
               <span>Orbiting Border (.gb-orbit)</span>
               <span>data-inview=&quot;true&quot; active</span>
             </div>
@@ -97,14 +97,14 @@ export function FoundationShowcase() {
         </div>
 
         {/* 2. Dirty-Yellow Buttons (Primary & Ghost) + Catalog Check */}
-        <div className="lg:col-span-7 flex flex-col justify-between rounded-2xl border border-white/10 bg-[#161616] p-6 sm:p-8 space-y-6">
+        <div className="lg:col-span-7 flex flex-col justify-between rounded-2xl border border-border-subtle bg-surface p-6 sm:p-8 space-y-6">
           <div className="space-y-4">
-            <h3 className="font-display text-2xl text-[#F8E010]">
+            <h3 className="font-display text-2xl text-accent-text">
               DIRTY-YELLOW WIPE BUTTONS (GB-BUTTON)
             </h3>
-            <p className="text-sm text-[#E6E6E6]">
+            <p className="text-sm text-text-soft">
               Hover, focus, or press to trigger the left-to-right{' '}
-              <span className="text-[#F8E010] font-semibold">#F8E010</span> wipe
+              <span className="text-accent-text font-semibold">#F8E010</span> wipe
               with synchronized black label transition.
             </p>
 
@@ -132,52 +132,52 @@ export function FoundationShowcase() {
           </div>
 
           {/* 3. Zod Catalog Validation & Site Config Readout */}
-          <div className="rounded-xl border border-white/10 bg-[#101010] p-5 space-y-3">
+          <div className="rounded-xl border border-border-subtle bg-bg p-5 space-y-3">
             <div className="flex items-center justify-between gap-2">
-              <div className="flex items-center gap-2 text-sm font-semibold text-[#F8E010]">
+              <div className="flex items-center gap-2 text-sm font-semibold text-accent-text">
                 <CheckCircle2 className="h-4 w-4 shrink-0" />
                 <span>Zod Catalog Validator Status</span>
               </div>
-              <span className="text-xs font-mono text-[#F8E010] tabular-nums">
+              <span className="text-xs font-mono text-accent-text tabular-nums">
                 {catalogValidationSummary.itemsCount} items ·{' '}
                 {catalogValidationSummary.warningsCount} warnings
               </span>
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 pt-1 text-xs">
-              <div className="rounded-lg bg-[#161616] p-3">
-                <span className="block text-[#E6E6E6]/70">Menus</span>
-                <span className="font-display text-2xl text-[#F8E010] tabular-nums">
+              <div className="rounded-lg bg-surface p-3">
+                <span className="block text-text-soft/70">Menus</span>
+                <span className="font-display text-2xl text-accent-text tabular-nums">
                   {catalogValidationSummary.menusCount}
                 </span>
               </div>
-              <div className="rounded-lg bg-[#161616] p-3">
-                <span className="block text-[#E6E6E6]/70">Sub-Types</span>
-                <span className="font-display text-2xl text-[#F8E010] tabular-nums">
+              <div className="rounded-lg bg-surface p-3">
+                <span className="block text-text-soft/70">Sub-Types</span>
+                <span className="font-display text-2xl text-accent-text tabular-nums">
                   {catalogValidationSummary.subTypesCount}
                 </span>
               </div>
-              <div className="rounded-lg bg-[#161616] p-3">
-                <span className="block text-[#E6E6E6]/70">Items</span>
-                <span className="font-display text-2xl text-[#F8E010] tabular-nums">
+              <div className="rounded-lg bg-surface p-3">
+                <span className="block text-text-soft/70">Items</span>
+                <span className="font-display text-2xl text-accent-text tabular-nums">
                   {catalogValidationSummary.itemsCount}
                 </span>
               </div>
-              <div className="rounded-lg bg-[#161616] p-3">
-                <span className="block text-[#E6E6E6]/70">Variants</span>
-                <span className="font-display text-2xl text-[#F8E010] tabular-nums">
+              <div className="rounded-lg bg-surface p-3">
+                <span className="block text-text-soft/70">Variants</span>
+                <span className="font-display text-2xl text-accent-text tabular-nums">
                   {catalogValidationSummary.variantsCount}
                 </span>
               </div>
-              <div className="rounded-lg bg-[#161616] p-3">
-                <span className="block text-[#E6E6E6]/70">Add-Ons</span>
-                <span className="font-display text-2xl text-[#F8E010] tabular-nums">
+              <div className="rounded-lg bg-surface p-3">
+                <span className="block text-text-soft/70">Add-Ons</span>
+                <span className="font-display text-2xl text-accent-text tabular-nums">
                   {catalogValidationSummary.addOnsCount}
                 </span>
               </div>
             </div>
 
-            <p className="text-xs text-[#E6E6E6]/80 pt-1">
+            <p className="text-xs text-text-soft/80 pt-1">
               {siteConfig.name} · {siteConfig.address} · Tel: {siteConfig.phone}{' '}
               · @{siteConfig.socialHandle}
             </p>

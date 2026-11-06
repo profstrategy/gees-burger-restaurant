@@ -27,13 +27,13 @@ export function CustomerDetailsSection<
   return (
     <section
       aria-label="Customer details"
-      className="rounded-2xl border border-white/10 bg-[#161616] p-5 sm:p-6 space-y-5"
+      className="rounded-2xl border border-border-subtle bg-surface p-5 sm:p-6 space-y-5"
     >
-      <div className="space-y-1 border-b border-white/10 pb-3">
-        <h2 className="font-display text-2xl sm:text-3xl text-[#F8E010]">
+      <div className="space-y-1 border-b border-border-subtle pb-3">
+        <h2 className="font-display text-2xl sm:text-3xl text-accent-text">
           CUSTOMER DETAILS
         </h2>
-        <p className="text-xs text-[#E6E6E6]/80">
+        <p className="text-xs text-text-soft/80">
           Your contact details for WhatsApp order confirmation.
         </p>
       </div>
@@ -78,7 +78,7 @@ export function CustomerDetailsSection<
         error={errors.homeAddress?.message as string | undefined}
       />
 
-      <p className="text-xs text-[#C4C4C4] leading-relaxed pt-1 border-t border-white/10">
+      <p className="text-xs text-text-subtle leading-relaxed pt-1 border-t border-border-subtle">
         By placing an order, you consent to Gee&apos;s Burger processing your
         contact and delivery details solely to fulfil your order via WhatsApp in
         accordance with the Nigeria Data Protection Act (NDPA).

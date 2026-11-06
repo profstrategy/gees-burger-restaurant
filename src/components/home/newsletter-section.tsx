@@ -144,14 +144,15 @@ export default function NewsletterSection() {
                 errors.email ? 'newsletter-email-error' : undefined
               }
               {...register('email')}
-              className="bg-[#161616]"
+              className="bg-surface"
             />
             {errors.email && (
               <p
                 id="newsletter-email-error"
                 role="alert"
-                className="mt-1.5 text-xs text-[#E10600]"
+                className="mt-1.5 inline-flex items-center gap-1.5 text-xs text-danger"
               >
+                <AlertCircle aria-hidden="true" className="h-3.5 w-3.5 shrink-0" />
                 {errors.email.message}
               </p>
             )}
@@ -171,7 +172,7 @@ export default function NewsletterSection() {
           </GbButton>
         </div>
 
-        <p className="text-xs text-[#E6E6E6]/80">
+        <p className="text-xs text-text-soft/80">
           By subscribing, you consent to Gee&apos;s Burger processing your email
           to send menu updates in accordance with the Nigeria Data Protection
           Act (NDPA). Unsubscribe anytime.
@@ -185,19 +186,19 @@ export default function NewsletterSection() {
           className="pt-1"
         >
           {status === 'success' && (
-            <p className="inline-flex items-center gap-2 text-sm font-semibold text-[#F8E010]">
+            <p className="inline-flex items-center gap-2 text-sm font-semibold text-accent-text">
               <CheckCircle2 className="h-4 w-4 shrink-0" />
               <span>{statusMessage}</span>
             </p>
           )}
           {status === 'already_subscribed' && (
-            <p className="inline-flex items-center gap-2 text-sm font-medium text-[#F8E850]">
+            <p className="inline-flex items-center gap-2 text-sm font-medium text-accent-text">
               <Info className="h-4 w-4 shrink-0" />
               <span>{statusMessage}</span>
             </p>
           )}
           {status === 'error' && (
-            <p className="inline-flex items-center gap-2 text-sm font-medium text-[#E10600]">
+            <p className="inline-flex items-center gap-2 text-sm font-medium text-danger">
               <AlertCircle className="h-4 w-4 shrink-0" />
               <span>{statusMessage}</span>
             </p>

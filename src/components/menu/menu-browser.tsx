@@ -211,7 +211,7 @@ export function MenuBrowser() {
       {/* Top Heading + Search Input Stage */}
       <StageSection
         stain="top-right"
-        className="py-10 sm:py-14 border-b border-white/10"
+        className="py-10 sm:py-14 border-b border-border-subtle"
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-6">
           <SectionHeading
@@ -225,7 +225,7 @@ export function MenuBrowser() {
               <label htmlFor="menu-search" className="sr-only">
                 Search dishes or ingredients
               </label>
-              <Search className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-[#9A9A9A]" />
+              <Search className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-text-placeholder" />
               <Input
                 id="menu-search"
                 type="search"
@@ -233,14 +233,14 @@ export function MenuBrowser() {
                 onChange={(e) => setRawQuery(e.target.value)}
                 onKeyDown={handleSearchKeyDown}
                 placeholder="Search burgers, sliders, jalapeño, shawarma..."
-                className="pl-10 pr-10 bg-[#161616]"
+                className="pl-10 pr-10 bg-surface"
               />
               {rawQuery.length > 0 && (
                 <button
                   type="button"
                   aria-label="Clear search"
                   onClick={clearQuery}
-                  className="absolute right-1.5 top-1/2 -translate-y-1/2 inline-flex items-center justify-center min-h-[40px] min-w-[40px] text-[#E6E6E6] hover:text-[#F8E010] rounded-lg cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F8E010]"
+                  className="absolute right-1.5 top-1/2 -translate-y-1/2 inline-flex items-center justify-center min-h-[40px] min-w-[40px] text-text-soft hover:text-accent-text rounded-lg cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
                 >
                   <X className="h-4 w-4" />
                 </button>
@@ -251,7 +251,7 @@ export function MenuBrowser() {
             <p
               role="status"
               aria-live="polite"
-              className="text-center text-xs text-[#E6E6E6]/80 tabular-nums"
+              className="text-center text-xs text-text-soft/80 tabular-nums"
             >
               {debouncedQuery.trim()
                 ? `${totalVisibleDishes} ${
@@ -268,7 +268,7 @@ export function MenuBrowser() {
       </StageSection>
 
       {/* Sticky Filter Bar */}
-      <div className="sticky top-[69px] z-30 border-b border-white/10 bg-[#101010]/95 backdrop-blur-md">
+      <div className="sticky top-[69px] z-30 border-b border-border-subtle bg-bg/95 backdrop-blur-md">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-3 space-y-2.5">
           {/* Row 1: All + Every Menu with >= 1 item */}
           <div className="relative">
@@ -287,10 +287,10 @@ export function MenuBrowser() {
                   handleMenuChipClick(e.currentTarget);
                 }}
                 className={cn(
-                  'inline-flex items-center justify-center min-h-[44px] px-4 py-2 rounded-full text-xs font-bold transition-colors whitespace-nowrap shrink-0 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F8E010]',
+                  'inline-flex items-center justify-center min-h-[44px] px-4 py-2 rounded-full text-xs font-bold transition-colors whitespace-nowrap shrink-0 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring',
                   menuId === null
-                    ? 'bg-[#F8E010] text-[#101010]'
-                    : 'bg-[#161616] text-[#E6E6E6] border border-white/15 hover:border-[#F8E010]/60 hover:text-[#F8E010]'
+                    ? 'bg-brand text-on-brand border-2 border-accent-text'
+                    : 'bg-surface text-text-soft border border-border hover:border-border-hover hover:text-accent-text'
                 )}
               >
                 All
@@ -309,10 +309,10 @@ export function MenuBrowser() {
                       handleMenuChipClick(e.currentTarget);
                     }}
                     className={cn(
-                      'inline-flex items-center justify-center min-h-[44px] px-4 py-2 rounded-full text-xs font-semibold transition-colors whitespace-nowrap shrink-0 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F8E010]',
+                      'inline-flex items-center justify-center min-h-[44px] px-4 py-2 rounded-full text-xs font-semibold transition-colors whitespace-nowrap shrink-0 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring',
                       isSelected
-                        ? 'bg-[#F8E010] text-[#101010] font-bold'
-                        : 'bg-[#161616] text-[#E6E6E6] border border-white/15 hover:border-[#F8E010]/60 hover:text-[#F8E010]'
+                        ? 'bg-brand text-on-brand font-bold border-2 border-accent-text'
+                        : 'bg-surface text-text-soft border border-border hover:border-border-hover hover:text-accent-text'
                     )}
                   >
                     {menu.title}
@@ -325,14 +325,14 @@ export function MenuBrowser() {
             {menuHasRightOverflow && (
               <div
                 aria-hidden="true"
-                className="pointer-events-none absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-[#101010] to-transparent"
+                className="pointer-events-none absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-bg to-transparent"
               />
             )}
           </div>
 
           {/* Row 2: Sub-types row when a menu with sub-types (Drinks) is selected */}
           {activeMenuSubTypes.length > 0 && (
-            <div className="relative pt-1 border-t border-white/10">
+            <div className="relative pt-1 border-t border-border-subtle">
               <div
                 ref={subTypeScrollerRef}
                 role="group"
@@ -348,10 +348,10 @@ export function MenuBrowser() {
                     handleSubTypeChipClick(e.currentTarget);
                   }}
                   className={cn(
-                    'inline-flex items-center justify-center min-h-[44px] px-4 py-1.5 rounded-full text-xs font-bold transition-colors whitespace-nowrap shrink-0 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F8E010]',
+                    'inline-flex items-center justify-center min-h-[44px] px-4 py-1.5 rounded-full text-xs font-bold transition-colors whitespace-nowrap shrink-0 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring',
                     subTypeId === null
-                      ? 'bg-[#F8E010] text-[#101010]'
-                      : 'bg-[#161616] text-[#E6E6E6] border border-white/15 hover:border-[#F8E010]/60 hover:text-[#F8E010]'
+                      ? 'bg-brand text-on-brand border-2 border-accent-text'
+                      : 'bg-surface text-text-soft border border-border hover:border-border-hover hover:text-accent-text'
                   )}
                 >
                   All {activeMenuRecord?.title ?? 'Drinks'}
@@ -370,10 +370,10 @@ export function MenuBrowser() {
                         handleSubTypeChipClick(e.currentTarget);
                       }}
                       className={cn(
-                        'inline-flex items-center justify-center min-h-[44px] px-4 py-1.5 rounded-full text-xs font-semibold transition-colors whitespace-nowrap shrink-0 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F8E010]',
+                        'inline-flex items-center justify-center min-h-[44px] px-4 py-1.5 rounded-full text-xs font-semibold transition-colors whitespace-nowrap shrink-0 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring',
                         isSelected
-                          ? 'bg-[#F8E010] text-[#101010] font-bold'
-                          : 'bg-[#161616] text-[#E6E6E6] border border-white/15 hover:border-[#F8E010]/60 hover:text-[#F8E010]'
+                          ? 'bg-brand text-on-brand font-bold border-2 border-accent-text'
+                          : 'bg-surface text-text-soft border border-border hover:border-border-hover hover:text-accent-text'
                       )}
                     >
                       {sub.title}
@@ -385,7 +385,7 @@ export function MenuBrowser() {
               {subTypeHasRightOverflow && (
                 <div
                   aria-hidden="true"
-                  className="pointer-events-none absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-[#101010] to-transparent"
+                  className="pointer-events-none absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-bg to-transparent"
                 />
               )}
             </div>
@@ -397,13 +397,13 @@ export function MenuBrowser() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-10 space-y-14">
         {/* Empty State */}
         {visibleSections.length === 0 && (
-          <div className="rounded-2xl border border-white/10 bg-[#161616] p-12 text-center space-y-5 max-w-xl mx-auto">
-            <h2 className="font-display text-3xl sm:text-4xl text-[#F8E010] break-words">
+          <div className="rounded-2xl border border-border-subtle bg-surface p-12 text-center space-y-5 max-w-xl mx-auto">
+            <h2 className="font-display text-3xl sm:text-4xl text-accent-text break-words">
               {(debouncedQuery || rawQuery).trim()
                 ? `No dishes match ‘${(debouncedQuery || rawQuery).trim()}’`
                 : 'No dishes match your current filter'}
             </h2>
-            <p className="text-sm text-[#E6E6E6]">
+            <p className="text-sm text-text-soft">
               Try searching for another dish or clear your filter to see the
               full catalog.
             </p>
@@ -444,7 +444,7 @@ export function MenuBrowser() {
                 <div className="space-y-10">
                   {subTypes.map((group, groupIdx) => (
                     <div key={group.subType.id} className="space-y-4">
-                      <h3 className="font-display text-2xl sm:text-3xl text-[#F8E010] border-b border-white/10 pb-2">
+                      <h3 className="font-display text-2xl sm:text-3xl text-accent-text border-b border-border-subtle pb-2">
                         {group.subType.title}
                       </h3>
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -494,10 +494,10 @@ export function MenuBrowser() {
 
       {/* Mobile Sticky Cart Bar ("N items · ₦total · View cart") shown after the first add */}
       {cartCount > 0 && (
-        <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 border-t border-[#F8E010]/40 bg-[#101010]/95 backdrop-blur-md p-3 shadow-2xl">
+        <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 border-t border-border-subtle bg-bg/95 backdrop-blur-md p-3 shadow-2xl">
           <Link
             href="/cart"
-            className="flex w-full items-center justify-between gap-3 min-h-[48px] rounded-xl bg-[#F8E010] px-5 py-3 text-sm font-extrabold text-[#101010] hover:bg-[#F8E850] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+            className="flex w-full items-center justify-between gap-3 min-h-[48px] rounded-xl bg-brand px-5 py-3 text-sm font-extrabold text-on-brand hover:bg-brand-splash transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
           >
             <span className="inline-flex items-center gap-2 tabular-nums">
               <ShoppingBag className="h-4 w-4 shrink-0" />

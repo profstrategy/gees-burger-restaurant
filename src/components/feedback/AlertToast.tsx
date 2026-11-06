@@ -23,23 +23,23 @@ const severityStyles: Record<
   }
 > = {
   success: {
-    barColor: 'bg-[#F8E010]',
-    iconColor: 'text-[#F8E010]',
+    barColor: 'bg-brand',
+    iconColor: 'text-accent-text',
     Icon: CheckCircle2,
   },
   info: {
-    barColor: 'bg-[#F8F8F8]',
-    iconColor: 'text-[#F8F8F8]',
+    barColor: 'bg-text-muted',
+    iconColor: 'text-text-muted',
     Icon: Info,
   },
   warning: {
-    barColor: 'bg-[#F8E010]',
-    iconColor: 'text-[#F8E010]',
+    barColor: 'bg-brand',
+    iconColor: 'text-accent-text',
     Icon: AlertTriangle,
   },
   error: {
-    barColor: 'bg-[#E10600]',
-    iconColor: 'text-[#E10600]',
+    barColor: 'bg-danger',
+    iconColor: 'text-danger',
     Icon: AlertCircle,
   },
 };
@@ -88,7 +88,7 @@ export function AlertToast({
       onMouseLeave={() => setIsPaused(false)}
       onFocus={() => setIsPaused(true)}
       onBlur={() => setIsPaused(false)}
-      className="pointer-events-auto relative flex items-start justify-between gap-3 overflow-hidden rounded-xl border border-white/15 bg-[#161616] p-4 pl-5 text-sm text-[#F8F8F8] shadow-xl"
+      className="pointer-events-auto relative flex items-start justify-between gap-3 overflow-hidden rounded-xl border border-border bg-surface p-4 pl-5 text-sm text-text shadow-xl"
     >
       {/* 3 px severity bar on the left */}
       <span
@@ -100,11 +100,11 @@ export function AlertToast({
         <Icon className={cn('h-5 w-5 shrink-0 mt-0.5', style.iconColor)} />
         <div className="space-y-1 min-w-0">
           {alert.title && (
-            <p className="font-display text-lg text-[#F8E010] leading-none">
+            <p className="font-display text-lg text-accent-text leading-none">
               {alert.title}
             </p>
           )}
-          <p className="text-xs sm:text-sm text-[#E6E6E6] leading-relaxed break-words">
+          <p className="text-xs sm:text-sm text-text-soft leading-relaxed break-words">
             {alert.message}
           </p>
 
@@ -114,7 +114,7 @@ export function AlertToast({
                 <Link
                   href={alert.action.href}
                   onClick={() => onDismiss(alert.id)}
-                  className="inline-flex items-center min-h-[36px] text-xs font-semibold text-[#F8E010] underline underline-offset-4 hover:text-[#F8E850] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F8E010] rounded"
+                  className="inline-flex items-center min-h-[36px] text-xs font-semibold text-accent-text underline underline-offset-4 hover:text-accent-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring rounded"
                 >
                   {alert.action.label}
                 </Link>
@@ -122,7 +122,7 @@ export function AlertToast({
                 <button
                   type="button"
                   onClick={handleActionClick}
-                  className="inline-flex items-center min-h-[36px] text-xs font-semibold text-[#F8E010] underline underline-offset-4 hover:text-[#F8E850] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F8E010] rounded"
+                  className="inline-flex items-center min-h-[36px] text-xs font-semibold text-accent-text underline underline-offset-4 hover:text-accent-text cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring rounded"
                 >
                   {alert.action.label}
                 </button>
@@ -136,7 +136,7 @@ export function AlertToast({
         type="button"
         aria-label="Dismiss notification"
         onClick={() => onDismiss(alert.id)}
-        className="inline-flex items-center justify-center min-h-[44px] min-w-[44px] -my-2 -mr-2 rounded-lg text-[#E6E6E6] hover:text-[#F8E010] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F8E010] shrink-0"
+        className="inline-flex items-center justify-center min-h-[44px] min-w-[44px] -my-2 -mr-2 rounded-lg text-text-soft hover:text-accent-text cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring shrink-0"
       >
         <X className="h-4 w-4" />
       </button>

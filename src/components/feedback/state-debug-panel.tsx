@@ -91,7 +91,7 @@ export function StateDebugPanel() {
   };
 
   return (
-    <div className="space-y-8 pt-10 border-t border-white/10">
+    <div className="space-y-8 pt-10 border-t border-border-subtle">
       <SectionHeading
         eyebrow="Stage 2 Verification"
         title="DOMAIN STATE & SELECTORS DEBUG"
@@ -100,16 +100,16 @@ export function StateDebugPanel() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Cart State & Demo Case Inspector */}
         <OrbitCard className="lg:col-span-7 p-6 space-y-5">
-          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-4">
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border-subtle pb-4">
             <div>
-              <p className="text-xs uppercase tracking-widest text-[#F8E010] font-semibold">
+              <p className="text-xs uppercase tracking-widest text-accent-text font-semibold">
                 Cart Slice (gees.cart.v1)
               </p>
-              <h3 className="font-display text-3xl text-[#F8E010]">
+              <h3 className="font-display text-3xl text-accent-text">
                 DERIVED TOTAL: {formatNaira(cartTotal)} ({cartCount} ITEMS)
               </h3>
             </div>
-            <span className="rounded-lg border border-white/15 bg-[#101010] px-3 py-1 text-xs text-[#E6E6E6]">
+            <span className="rounded-lg border border-border bg-bg px-3 py-1 text-xs text-text-soft">
               Hydrated: {cart.isHydrated ? 'true' : 'false'}
             </span>
           </div>
@@ -154,7 +154,7 @@ export function StateDebugPanel() {
           </div>
 
           {cart.lines.length === 0 ? (
-            <p className="rounded-xl border border-white/10 bg-[#101010] p-4 text-xs text-[#E6E6E6]/75">
+            <p className="rounded-xl border border-border-subtle bg-bg p-4 text-xs text-text-soft/75">
               Cart is empty. Use the buttons above to add lines and reload the
               page to verify localStorage hydration.
             </p>
@@ -170,14 +170,14 @@ export function StateDebugPanel() {
                 return (
                   <div
                     key={line.key}
-                    className="rounded-xl border border-white/10 bg-[#101010] p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3"
+                    className="rounded-xl border border-border-subtle bg-bg p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3"
                   >
                     <div className="space-y-1">
-                      <p className="font-semibold text-sm text-[#F8F8F8]">
+                      <p className="font-semibold text-sm text-text">
                         {item?.item ?? line.itemId}
                         {variant ? ` (${variant.label})` : ''}
                       </p>
-                      <p className="text-[11px] font-mono text-[#6B6B6B]">
+                      <p className="text-[11px] font-mono text-text-disabled">
                         key: {line.key}
                       </p>
                       {line.addOns.length > 0 && (
@@ -189,7 +189,7 @@ export function StateDebugPanel() {
                             return (
                               <span
                                 key={entry.addOnId}
-                                className="inline-flex items-center gap-1 rounded-md border border-[#F8E010]/40 bg-[#F8E850]/10 px-2 py-0.5 text-[11px] text-[#F8E010]"
+                                className="inline-flex items-center gap-1 rounded-md border border-border bg-brand-splash/10 px-2 py-0.5 text-[11px] text-accent-text"
                               >
                                 {entry.qty}× {addOn?.name ?? entry.addOnId}
                               </span>
@@ -200,7 +200,7 @@ export function StateDebugPanel() {
                     </div>
 
                     <div className="flex items-center gap-2 self-end sm:self-center">
-                      <span className="font-bold text-sm text-[#F8E010] tabular-nums mr-1">
+                      <span className="font-bold text-sm text-accent-text tabular-nums mr-1">
                         {formatNaira(lineTotal)}
                       </span>
                       <button
@@ -214,7 +214,7 @@ export function StateDebugPanel() {
                             })
                           )
                         }
-                        className="inline-flex items-center justify-center min-h-[44px] min-w-[44px] rounded-lg border border-white/15 bg-[#161616] text-[#F8F8F8] hover:border-[#F8E010]"
+                        className="inline-flex items-center justify-center min-h-[44px] min-w-[44px] rounded-lg border border-border bg-surface text-text hover:border-accent-text"
                       >
                         <Minus className="h-3.5 w-3.5" />
                       </button>
@@ -232,7 +232,7 @@ export function StateDebugPanel() {
                             })
                           )
                         }
-                        className="inline-flex items-center justify-center min-h-[44px] min-w-[44px] rounded-lg bg-[#F8E010] text-[#101010]"
+                        className="inline-flex items-center justify-center min-h-[44px] min-w-[44px] rounded-lg bg-brand text-on-brand"
                       >
                         <Plus className="h-3.5 w-3.5" />
                       </button>
@@ -242,7 +242,7 @@ export function StateDebugPanel() {
                         onClick={() =>
                           dispatch(actions.cartRemoveLine({ key: line.key }))
                         }
-                        className="inline-flex items-center justify-center min-h-[44px] min-w-[44px] rounded-lg border border-white/15 bg-[#161616] text-[#E6E6E6] hover:border-[#E10600] hover:text-[#E10600]"
+                        className="inline-flex items-center justify-center min-h-[44px] min-w-[44px] rounded-lg border border-border bg-surface text-text-soft hover:border-danger hover:text-danger"
                       >
                         <Trash2 className="h-3.5 w-3.5" />
                       </button>
@@ -256,11 +256,11 @@ export function StateDebugPanel() {
 
         {/* Search & Diacritic Filter Inspector */}
         <OrbitCard className="lg:col-span-5 p-6 space-y-4">
-          <div className="border-b border-white/10 pb-3">
-            <p className="text-xs uppercase tracking-widest text-[#F8E010] font-semibold">
+          <div className="border-b border-border-subtle pb-3">
+            <p className="text-xs uppercase tracking-widest text-accent-text font-semibold">
               Catalog Filter &amp; Alerts Slice
             </p>
-            <h3 className="font-display text-2xl text-[#F8E010]">
+            <h3 className="font-display text-2xl text-accent-text">
               SELECTVISIBLEMENUS ({visibleMenus.length} MENUS / {visibleItemsCount} ITEMS)
             </h3>
           </div>
@@ -268,7 +268,7 @@ export function StateDebugPanel() {
           <div className="space-y-2">
             <label
               htmlFor="debug-catalog-query"
-              className="block text-xs font-medium text-[#E6E6E6]"
+              className="block text-xs font-medium text-text-soft"
             >
               Debounced Query (300 ms, diacritic-insensitive)
             </label>
@@ -279,12 +279,12 @@ export function StateDebugPanel() {
                 value={rawQuery}
                 onChange={(e) => setRawQuery(e.target.value)}
                 placeholder="Try: jalapeno"
-                className="flex-1 min-h-[44px] rounded-xl border border-white/15 bg-[#101010] px-3 py-2 text-sm text-[#F8F8F8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F8E010]"
+                className="flex-1 min-h-[44px] rounded-xl border border-border bg-bg px-3 py-2 text-sm text-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
               />
               <button
                 type="button"
                 onClick={() => setRawQuery('jalapeno')}
-                className="min-h-[44px] rounded-xl border border-[#F8E010]/40 bg-[#101010] px-3 text-xs font-semibold text-[#F8E010] hover:bg-[#F8E010] hover:text-[#101010] transition-colors cursor-pointer"
+                className="min-h-[44px] rounded-xl border border-border bg-bg px-3 text-xs font-semibold text-accent-text hover:bg-brand hover:text-on-brand transition-colors cursor-pointer"
               >
                 Test &ldquo;jalapeno&rdquo;
               </button>
@@ -296,23 +296,23 @@ export function StateDebugPanel() {
                   setMenu(null);
                   setSubType(null);
                 }}
-                className="inline-flex items-center justify-center min-h-[44px] min-w-[44px] rounded-xl border border-white/15 bg-[#101010] text-[#E6E6E6] hover:border-[#F8E010]"
+                className="inline-flex items-center justify-center min-h-[44px] min-w-[44px] rounded-xl border border-border bg-bg text-text-soft hover:border-accent-text"
               >
                 <RotateCcw className="h-4 w-4" />
               </button>
             </div>
           </div>
 
-          <div className="rounded-xl border border-white/10 bg-[#101010] p-3 text-xs space-y-1.5">
-            <p className="text-[#E6E6E6]">
+          <div className="rounded-xl border border-border-subtle bg-bg p-3 text-xs space-y-1.5">
+            <p className="text-text-soft">
               Active Query:{' '}
-              <span className="font-mono text-[#F8E010]">
+              <span className="font-mono text-accent-text">
                 &ldquo;{debouncedQuery}&rdquo;
               </span>
             </p>
-            <p className="text-[#E6E6E6]">
+            <p className="text-text-soft">
               Alerts in Queue (max 3):{' '}
-              <span className="font-mono text-[#F8E010]">
+              <span className="font-mono text-accent-text">
                 {alerts.queue.length}
               </span>
             </p>
@@ -320,10 +320,10 @@ export function StateDebugPanel() {
               {visibleMenus.map((group) => (
                 <div
                   key={group.menu.id}
-                  className="flex items-center justify-between text-[11px] text-[#E6E6E6]/80 border-t border-white/5 pt-1"
+                  className="flex items-center justify-between text-[11px] text-text-soft/80 border-t border-border-subtle pt-1"
                 >
                   <span>{group.menu.title}</span>
-                  <span className="font-mono text-[#F8E010]">
+                  <span className="font-mono text-accent-text">
                     {group.items.length} items
                     {group.subTypeGroups
                       ? ` (${group.subTypeGroups.length} sub-types)`

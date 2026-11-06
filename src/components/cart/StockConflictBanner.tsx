@@ -73,12 +73,12 @@ export function StockConflictBanner({
       aria-label="Stock Conflict Warning"
       data-conflict-banner="true"
       tabIndex={-1}
-      className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-2xl border border-[#F8E010] bg-[#F8E010]/10 p-4 sm:p-5 text-[#F8F8F8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F8E010]"
+      className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-2xl border border-accent-text bg-brand/10 p-4 sm:p-5 text-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
     >
       <div className="flex items-start gap-3">
-        <AlertTriangle className="h-5 w-5 text-[#F8E010] shrink-0 mt-0.5" />
+        <AlertTriangle className="h-5 w-5 text-accent-text shrink-0 mt-0.5" />
         <div className="space-y-1">
-          <ul className="space-y-1 text-xs sm:text-sm font-medium text-[#F8F8F8]">
+          <ul className="space-y-1 text-xs sm:text-sm font-medium text-text">
             {entries.map(([key, rawMsg]) => (
               <li key={key}>{deriveStockConflictMessage(key, rawMsg)}</li>
             ))}

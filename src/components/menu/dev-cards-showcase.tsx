@@ -41,19 +41,19 @@ function DevCardEntry({
 
   return (
     <div className="flex flex-col gap-3">
-      <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-white/10 bg-[#161616] px-3.5 py-2.5">
+      <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-border-subtle bg-surface px-3.5 py-2.5">
         <div>
-          <span className="inline-block rounded bg-[#F8E010]/15 px-2 py-0.5 font-mono text-[11px] font-bold text-[#F8E010]">
+          <span className="inline-block rounded bg-brand/15 px-2 py-0.5 font-mono text-[11px] font-bold text-accent-text">
             {badge} · Derived Layout {model.layout}
           </span>
-          <p className="mt-0.5 text-xs text-[#E6E6E6]/80">{subtitle}</p>
+          <p className="mt-0.5 text-xs text-text-soft/80">{subtitle}</p>
         </div>
 
         {enableFriedChickenPreset && (
           <button
             type="button"
             onClick={applyDemoPreset}
-            className="inline-flex items-center gap-1.5 min-h-[44px] rounded-xl border border-[#F8E010] bg-[#101010] px-3 py-1.5 text-xs font-semibold text-[#F8E010] hover:bg-[#F8E010] hover:text-[#101010] transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F8E010]"
+            className="inline-flex items-center gap-1.5 min-h-[44px] rounded-xl border border-accent-text bg-bg px-3 py-1.5 text-xs font-semibold text-accent-text hover:bg-brand hover:text-on-brand transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
           >
             <Sparkles className="h-3.5 w-3.5 shrink-0" />
             <span>Select 2 pcs × 3 + Side of Rice × 4 (₦38,000)</span>
@@ -118,7 +118,7 @@ export function DevCardsShowcase() {
 
   return (
     <div className="space-y-10">
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/10 pb-6">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-border-subtle pb-6">
         <SectionHeading
           align="left"
           kicker="Stage 3 Verification · /dev/cards"
@@ -127,9 +127,9 @@ export function DevCardsShowcase() {
         />
 
         <div className="flex flex-wrap items-center gap-3">
-          <div className="rounded-xl border border-white/15 bg-[#161616] px-4 py-2.5 text-xs">
-            <span className="text-[#E6E6E6]/75 block">Live Cart Total</span>
-            <span className="font-display text-2xl text-[#F8E010] tabular-nums">
+          <div className="rounded-xl border border-border bg-surface px-4 py-2.5 text-xs">
+            <span className="text-text-soft/75 block">Live Cart Total</span>
+            <span className="font-display text-2xl text-accent-text tabular-nums">
               {formatNaira(cartTotal)} ({cartCount} items)
             </span>
           </div>
