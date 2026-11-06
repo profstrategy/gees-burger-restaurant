@@ -174,13 +174,13 @@ export function DeliveryAreaField({
   return (
     <section
       aria-label="Delivery logistics"
-      className="rounded-2xl border border-white/10 bg-[#161616] p-5 sm:p-6 space-y-5"
+      className="rounded-2xl border border-border-subtle bg-surface p-5 sm:p-6 space-y-5"
     >
-      <div className="space-y-1 border-b border-white/10 pb-3">
-        <h2 className="font-display text-2xl sm:text-3xl text-[#F8E010]">
+      <div className="space-y-1 border-b border-border-subtle pb-3">
+        <h2 className="font-display text-2xl sm:text-3xl text-accent-text">
           DELIVERY LOGISTICS
         </h2>
-        <p className="text-xs text-[#E6E6E6]/80">
+        <p className="text-xs text-text-soft/80">
           Select your delivery area in Kano, vehicle, and exact address.
         </p>
       </div>
@@ -192,20 +192,20 @@ export function DeliveryAreaField({
           aria-label="Loading delivery areas"
           className="space-y-4 animate-pulse"
         >
-          <div className="h-11 w-full rounded-xl bg-[#101010] border border-white/10" />
+          <div className="h-11 w-full rounded-xl bg-bg border border-border-subtle" />
           <div className="grid grid-cols-2 gap-3">
-            <div className="h-20 rounded-xl bg-[#101010] border border-white/10" />
-            <div className="h-20 rounded-xl bg-[#101010] border border-white/10" />
+            <div className="h-20 rounded-xl bg-bg border border-border-subtle" />
+            <div className="h-20 rounded-xl bg-bg border border-border-subtle" />
           </div>
         </div>
       ) : fetchError && areas.length === 0 ? (
         /* Inline Error with Retry */
         <div
           role="alert"
-          className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-xl border border-[#E10600] bg-[#E10600]/10 p-4 text-xs sm:text-sm text-[#F8F8F8]"
+          className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-xl border border-danger bg-danger/10 p-4 text-xs sm:text-sm text-text"
         >
           <div className="flex items-center gap-2.5">
-            <AlertCircle className="h-4 w-4 text-[#E10600] shrink-0" />
+            <AlertCircle className="h-4 w-4 text-danger shrink-0" />
             <span>{fetchError}</span>
           </div>
           <GbButton
@@ -224,9 +224,9 @@ export function DeliveryAreaField({
           <div className="space-y-1.5">
             <label
               htmlFor="delivery-area-select"
-              className="block text-xs font-medium text-[#E6E6E6]"
+              className="block text-xs font-medium text-text-soft"
             >
-              Delivery Area <span className="text-[#F8E010]">*</span>
+              Delivery Area <span className="text-accent-text">*</span>
             </label>
             <div className="relative">
               <select
@@ -239,20 +239,20 @@ export function DeliveryAreaField({
                   areaError ? 'delivery-area-select-error' : undefined
                 }
                 className={cn(
-                  'flex min-h-[46px] w-full appearance-none rounded-xl border bg-[#161616] px-3.5 pr-10 py-2.5 text-sm text-[#F8F8F8] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F8E010] cursor-pointer',
+                  'flex min-h-[46px] w-full appearance-none rounded-xl border bg-surface px-3.5 pr-10 py-2.5 text-sm text-text transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring cursor-pointer',
                   areaError
-                    ? 'border-[#E10600] focus-visible:ring-[#E10600]'
-                    : 'border-[#6B6B6B] hover:border-[#F8F8F8]/60'
+                    ? 'border-danger focus-visible:ring-danger'
+                    : 'border-border hover:border-border-hover'
                 )}
               >
-                <option value="" className="bg-[#161616] text-[#9A9A9A]">
+                <option value="" className="bg-surface text-text-placeholder">
                   Select delivery area…
                 </option>
                 {areas.map((area) => (
                   <option
                     key={area.id}
                     value={area.id}
-                    className="bg-[#161616] text-[#F8F8F8]"
+                    className="bg-surface text-text"
                   >
                     {area.name} · Bike {formatNaira(area.bikeFee)} · Car{' '}
                     {formatNaira(area.carFee)}
@@ -261,16 +261,16 @@ export function DeliveryAreaField({
               </select>
               <ChevronDown
                 aria-hidden="true"
-                className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-[#F8E010]"
+                className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-accent-text"
               />
             </div>
             {areaError && (
               <p
                 id="delivery-area-select-error"
                 role="alert"
-                className="flex items-center gap-1.5 text-xs font-medium text-[#E10600]"
+                className="flex items-center gap-1.5 text-xs font-medium text-danger"
               >
-                <AlertCircle className="h-3.5 w-3.5 shrink-0 text-[#E10600]" />
+                <AlertCircle className="h-3.5 w-3.5 shrink-0 text-danger" />
                 <span>{areaError}</span>
               </p>
             )}
@@ -278,8 +278,8 @@ export function DeliveryAreaField({
 
           {/* Bike / Car Choice with Two Cards (stacked label on top line, fee on next line, no overlapping text) */}
           <div className="space-y-2">
-            <span className="block text-xs font-medium text-[#E6E6E6]">
-              Vehicle <span className="text-[#F8E010]">*</span>
+            <span className="block text-xs font-medium text-text-soft">
+              Vehicle <span className="text-accent-text">*</span>
             </span>
             <div
               role="radiogroup"
@@ -292,10 +292,10 @@ export function DeliveryAreaField({
                 aria-checked={value.vehicle === 'bike'}
                 onClick={() => handleVehicleChange('bike')}
                 className={cn(
-                  'flex flex-col items-start justify-center gap-1.5 min-h-[72px] rounded-xl p-4 text-left transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F8E010]',
+                  'flex flex-col items-start justify-center gap-1.5 min-h-[72px] rounded-xl p-4 text-left transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring',
                   value.vehicle === 'bike'
-                    ? 'bg-[#F8E010] text-[#101010] border border-[#F8E010]'
-                    : 'bg-[#161616] text-[#F8F8F8] border border-[#6B6B6B] hover:border-[#F8E010]'
+                    ? 'bg-brand text-on-brand border-2 border-accent-text'
+                    : 'bg-surface text-text border border-border hover:border-border-hover'
                 )}
               >
                 <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider leading-tight">
@@ -313,10 +313,10 @@ export function DeliveryAreaField({
                 aria-checked={value.vehicle === 'car'}
                 onClick={() => handleVehicleChange('car')}
                 className={cn(
-                  'flex flex-col items-start justify-center gap-1.5 min-h-[72px] rounded-xl p-4 text-left transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F8E010]',
+                  'flex flex-col items-start justify-center gap-1.5 min-h-[72px] rounded-xl p-4 text-left transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring',
                   value.vehicle === 'car'
-                    ? 'bg-[#F8E010] text-[#101010] border border-[#F8E010]'
-                    : 'bg-[#161616] text-[#F8F8F8] border border-[#6B6B6B] hover:border-[#F8E010]'
+                    ? 'bg-brand text-on-brand border-2 border-accent-text'
+                    : 'bg-surface text-text border border-border hover:border-border-hover'
                 )}
               >
                 <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider leading-tight">

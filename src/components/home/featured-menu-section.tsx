@@ -48,7 +48,7 @@ export function FeaturedMenuSection({ items }: FeaturedMenuSectionProps) {
       <div className="flex justify-center pt-2">
         <Link
           href="/menu"
-          className="inline-flex items-center justify-center gap-2 min-h-[48px] rounded-xl bg-[#F8E010] px-8 py-3 text-sm sm:text-base font-bold text-[#101010] hover:bg-[#F8E850] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F8E010] focus-visible:ring-offset-2 focus-visible:ring-offset-[#101010] whitespace-nowrap shrink-0"
+          className="inline-flex items-center justify-center gap-2 min-h-[48px] rounded-xl bg-brand px-8 py-3 text-sm sm:text-base font-bold text-on-brand hover:bg-brand-splash transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-bg whitespace-nowrap shrink-0"
         >
           <span>See more</span>
           <ArrowRight className="h-4 w-4 shrink-0" />

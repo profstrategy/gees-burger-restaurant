@@ -2,13 +2,14 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { ShoppingBag, Menu as MenuIcon, X } from 'lucide-react';
 import { useCart } from '@/state/context';
 import { selectCartCount } from '@/state/selectors';
 import { siteConfig } from '@/config/site';
 import { cn } from '@/lib/utils';
+import { Logo } from '@/components/common/Logo';
+import { ThemeToggle } from '@/components/theme/ThemeToggle';
 
 const NAV_LINKS = [
   { href: '/', label: 'Home' },
@@ -23,24 +24,20 @@ export function SiteHeader() {
   const totalItems = cart.isHydrated ? selectCartCount(cart) : 0;
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-[#101010] border-b border-white/10">
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-6 px-4 sm:px-6 lg:px-8 py-3">
-        {/* Brand Logo on Black, min-width 120px */}
+    <header className="sticky top-0 z-50 w-full border-b border-border-subtle bg-bg">
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-1 px-3 py-3 sm:gap-6 sm:px-6 lg:px-8">
         <Link
           href="/"
           aria-label={`${siteConfig.name} Home`}
-          className="inline-flex items-center gap-3 min-w-[120px] min-h-[44px] bg-[#101010] rounded-lg px-2 py-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F8E010] shrink-0"
+          className="inline-flex min-h-[44px] min-w-[120px] shrink-0 items-center gap-3 rounded-lg px-2 py-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
         >
-          <Image
-            src="/brand/gees-burger-logo.webp"
-            alt={siteConfig.name}
-            width={120}
-            height={158}
-            referrerPolicy="no-referrer"
-            className="h-12 w-auto min-w-[36px] object-contain"
+          <Logo
+            className="shrink-0"
+            darkClassName="h-12 w-auto min-w-[36px] object-contain"
+            lightClassName="h-12 w-auto min-w-[36px] object-contain"
             priority
           />
-          <span className="font-display text-2xl tracking-wider text-[#F8E010] whitespace-nowrap">
+          <span className="max-[360px]:hidden whitespace-nowrap font-display text-2xl tracking-wider text-accent-text">
             GEE&apos;S BURGER
           </span>
         </Link>
@@ -61,10 +58,10 @@ export function SiteHeader() {
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  'inline-flex items-center min-h-[44px] px-2 text-sm font-semibold transition-colors whitespace-nowrap shrink-0 border-b-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F8E010] rounded-sm',
+                  'inline-flex min-h-[44px] shrink-0 items-center whitespace-nowrap rounded-sm border-b-2 px-2 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring',
                   isActive
-                    ? 'border-[#F8E010] text-[#F8E010]'
-                    : 'border-transparent text-[#E6E6E6] hover:text-[#F8E010]'
+                    ? 'border-accent-text text-accent-text'
+                    : 'border-transparent text-text-soft hover:text-accent-text'
                 )}
               >
                 {link.label}
@@ -74,30 +71,32 @@ export function SiteHeader() {
         </nav>
 
         {/* Cart Icon with Item-Count Badge from selectCartCount */}
-        <div className="flex items-center gap-3 shrink-0">
+        <div className="flex shrink-0 items-center gap-1 sm:gap-3">
           <Link
             href="/cart"
             aria-label={`Cart (${totalItems} ${
               totalItems === 1 ? 'item' : 'items'
             })`}
-            className="relative inline-flex items-center justify-center gap-2 min-h-[44px] min-w-[44px] rounded-xl border border-[#F8E010]/60 bg-[#161616] px-3.5 py-2 text-sm font-semibold text-[#F8F8F8] hover:border-[#F8E010] hover:text-[#F8E010] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F8E010]"
+            className="relative inline-flex min-h-[44px] min-w-[44px] items-center justify-center gap-2 rounded-xl border border-border bg-surface px-3.5 py-2 text-sm font-semibold text-text transition-colors hover:border-accent-text hover:text-accent-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring max-[360px]:gap-1 max-[360px]:px-2"
           >
-            <ShoppingBag className="h-5 w-5 text-[#F8E010] shrink-0" />
+            <ShoppingBag className="h-5 w-5 shrink-0 text-accent-text" />
             <span className="hidden sm:inline">Cart</span>
             <span
               data-testid="header-cart-badge"
-              className="inline-flex h-5 min-w-[20px] items-center justify-center rounded-full bg-[#F8E010] px-1.5 text-xs font-extrabold text-[#101010] tabular-nums"
+              className="inline-flex h-5 min-w-[20px] items-center justify-center rounded-full bg-brand px-1.5 text-xs font-extrabold tabular-nums text-on-brand"
             >
               {totalItems}
             </span>
           </Link>
+
+          <ThemeToggle />
 
           <button
             type="button"
             aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={mobileMenuOpen}
             onClick={() => setMobileMenuOpen((prev) => !prev)}
-            className="inline-flex md:hidden items-center justify-center min-h-[44px] min-w-[44px] rounded-xl border border-white/15 bg-[#161616] text-[#F8F8F8] hover:border-[#F8E010] hover:text-[#F8E010] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F8E010]"
+            className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-xl border border-border bg-surface text-text hover:border-accent-text hover:text-accent-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring md:hidden"
           >
             {mobileMenuOpen ? (
               <X className="h-5 w-5" />
@@ -112,7 +111,7 @@ export function SiteHeader() {
       {mobileMenuOpen && (
         <nav
           aria-label="Mobile Navigation"
-          className="md:hidden border-t border-white/10 bg-[#101010] px-4 py-3 space-y-1"
+          className="space-y-1 border-t border-border-subtle bg-bg px-4 py-3 md:hidden"
         >
           {NAV_LINKS.map((link) => {
             const isActive =
@@ -126,10 +125,10 @@ export function SiteHeader() {
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
                 className={cn(
-                  'flex items-center min-h-[44px] px-3 rounded-lg text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F8E010]',
+                  'flex min-h-[44px] items-center rounded-lg px-3 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring',
                   isActive
-                    ? 'bg-[#161616] text-[#F8E010] font-semibold'
-                    : 'text-[#E6E6E6] hover:bg-[#161616] hover:text-[#F8E010]'
+                    ? 'bg-surface text-accent-text font-semibold'
+                    : 'text-text-soft hover:bg-surface hover:text-accent-text'
                 )}
               >
                 {link.label}
@@ -139,10 +138,10 @@ export function SiteHeader() {
           <Link
             href="/cart"
             onClick={() => setMobileMenuOpen(false)}
-            className="flex items-center justify-between min-h-[44px] px-3 rounded-lg text-sm font-medium text-[#E6E6E6] hover:bg-[#161616] hover:text-[#F8E010] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F8E010]"
+            className="flex min-h-[44px] items-center justify-between rounded-lg px-3 text-sm font-medium text-text-soft hover:bg-surface hover:text-accent-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
           >
             <span>Cart</span>
-            <span className="rounded-full bg-[#F8E010] px-2 py-0.5 text-xs font-bold text-[#101010] tabular-nums">
+            <span className="rounded-full bg-brand px-2 py-0.5 text-xs font-bold tabular-nums text-on-brand">
               {totalItems}
             </span>
           </Link>

@@ -110,23 +110,23 @@ export default function ReviewsCarousel() {
                         aria-hidden="true"
                         className={
                           starIdx < review.rating
-                            ? 'h-4 w-4 fill-[#F8E010] text-[#F8E010]'
-                            : 'h-4 w-4 text-[#6B6B6B]'
+                            ? 'h-4 w-4 fill-brand text-accent-text'
+                            : 'h-4 w-4 text-text-disabled'
                         }
                       />
                     ))}
                   </div>
 
-                  <p className="text-sm text-[#F8F8F8] leading-relaxed whitespace-pre-line">
+                  <p className="text-sm text-text leading-relaxed whitespace-pre-line">
                     {review.text}
                   </p>
                 </div>
 
-                <div className="pt-3 border-t border-white/10 flex items-center justify-between gap-2 text-xs">
-                  <span className="font-semibold text-[#F8E010]">
+                <div className="pt-3 border-t border-border-subtle flex items-center justify-between gap-2 text-xs">
+                  <span className="font-semibold text-accent-text">
                     {review.name}
                   </span>
-                  <span className="text-[#E6E6E6]/80">Google review</span>
+                  <span className="text-text-soft/80">Google review</span>
                 </div>
               </OrbitCard>
             </CarouselItem>

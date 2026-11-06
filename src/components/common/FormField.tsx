@@ -32,16 +32,6 @@ export interface FormFieldProps {
   className?: string;
 }
 
-/**
- * Reusable FormField (components/common/FormField.tsx).
- * Stage 5.3 visual rules:
- * - Dark surface #161616
- * - 1 px Ash border (#6B6B6B)
- * - #F8F8F8 text
- * - Placeholder #9A9A9A (>= 4.5:1 contrast on #161616)
- * - Yellow focus ring (#F8E010)
- * - Red border (#E10600) + AlertCircle icon + error message for errors
- */
 export function FormField({
   id,
   label,
@@ -75,20 +65,20 @@ export function FormField({
       .join(' ') || undefined;
 
   const baseInputClass = cn(
-    'w-full rounded-xl border bg-[#161616] px-3.5 py-2.5 text-sm text-[#F8F8F8] placeholder:text-[#9A9A9A] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F8E010] disabled:cursor-not-allowed disabled:opacity-50',
+    'w-full rounded-xl border bg-surface px-3.5 py-2.5 text-sm text-text placeholder:text-text-placeholder transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring disabled:cursor-not-allowed disabled:opacity-50',
     error
-      ? 'border-[#E10600] focus-visible:ring-[#E10600]'
-      : 'border-[#6B6B6B] hover:border-[#F8F8F8]/60'
+      ? 'border-danger focus-visible:ring-danger'
+      : 'border-border hover:border-border-hover'
   );
 
   return (
     <div className={cn('space-y-1.5', className)}>
       <label
         htmlFor={inputId}
-        className="block text-xs font-medium text-[#E6E6E6]"
+        className="block text-xs font-medium text-text-soft"
       >
         {label}
-        {required && <span className="text-[#F8E010] ml-1">*</span>}
+        {required && <span className="text-accent-text ml-1">*</span>}
       </label>
 
       {children ? (
@@ -136,7 +126,7 @@ export function FormField({
       )}
 
       {hint && !error && (
-        <p id={hintId} className="text-[11px] text-[#E6E6E6]/80">
+        <p id={hintId} className="text-[11px] text-text-soft/80">
           {hint}
         </p>
       )}
@@ -145,9 +135,9 @@ export function FormField({
         <p
           id={errorId}
           role="alert"
-          className="flex items-center gap-1.5 text-xs font-medium text-[#E10600]"
+          className="flex items-center gap-1.5 text-xs font-medium text-danger"
         >
-          <AlertCircle className="h-3.5 w-3.5 shrink-0 text-[#E10600]" />
+          <AlertCircle className="h-3.5 w-3.5 shrink-0 text-danger" />
           <span>{error}</span>
         </p>
       )}

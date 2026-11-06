@@ -20,13 +20,13 @@ export function OrderErrorBanner({ message, onRetry }: OrderErrorBannerProps) {
     <div
       role="alert"
       aria-label="Order Submission Failed"
-      className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-xl border border-[#E10600] bg-[#E10600]/10 p-4 text-xs sm:text-sm text-[#F8F8F8]"
+      className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-xl border border-danger bg-danger/10 p-4 text-xs sm:text-sm text-text"
     >
       <div className="flex items-start gap-2.5">
-        <AlertCircle className="h-4 w-4 text-[#E10600] shrink-0 mt-0.5" />
+        <AlertCircle className="h-4 w-4 text-danger shrink-0 mt-0.5" />
         <div className="space-y-0.5">
-          <p className="font-bold text-[#F8F8F8]">Order could not be sent</p>
-          <p className="text-[#E6E6E6]">{message}</p>
+          <p className="font-bold text-text">Order could not be sent</p>
+          <p className="text-text-soft">{message}</p>
         </div>
       </div>
 

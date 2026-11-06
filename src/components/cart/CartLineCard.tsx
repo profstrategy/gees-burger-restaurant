@@ -115,16 +115,16 @@ export const CartLineCard = memo(function CartLineCard({
       data-conflict-line={hasConflict ? line.key : undefined}
       tabIndex={hasConflict ? -1 : undefined}
       className={cn(
-        'rounded-2xl border bg-[#161616] p-4 sm:p-5 space-y-4 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F8E010]',
+        'rounded-2xl border bg-surface p-4 sm:p-5 space-y-4 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring',
         hasConflict
-          ? 'border-[#E10600] ring-1 ring-[#E10600]'
-          : 'border-white/10'
+          ? 'border-danger ring-1 ring-danger'
+          : 'border-border-subtle'
       )}
     >
       {/* Main Row: Thumbnail, Item Name + Variant Label, Stepper, Line Total, Red Trash */}
       <div className="flex flex-col sm:flex-row gap-4 sm:items-center justify-between">
         <div className="flex items-center gap-4 min-w-0 flex-1">
-          <div className="relative h-20 w-24 sm:w-28 shrink-0 rounded-xl bg-[#101010] overflow-hidden flex items-center justify-center border border-white/5">
+          <div className="relative h-20 w-24 sm:w-28 shrink-0 rounded-xl bg-bg overflow-hidden flex items-center justify-center border border-border-subtle">
             {resolvedImage ? (
               <Image
                 src={resolvedImage}
@@ -140,16 +140,16 @@ export const CartLineCard = memo(function CartLineCard({
                 className="object-cover"
               />
             ) : (
-              <div className="relative flex items-center justify-center w-full h-full bg-[#101010]">
+              <div className="relative flex items-center justify-center w-full h-full bg-fixed-dark-bg">
                 <div
                   aria-hidden="true"
-                  className="pointer-events-none absolute h-14 w-14 rounded-full bg-[#F8E010]/15 blur-xl"
+                  className="pointer-events-none absolute h-14 w-14 rounded-full bg-brand/15 blur-xl"
                 />
                 <Image
                   src="/brand/gees-burger-logo.webp"
                   alt={item.item}
-                  width={120}
-                  height={158}
+                  width={800}
+                  height={1134}
                   referrerPolicy="no-referrer"
                   className="relative z-10 min-w-[120px] w-[120px] scale-50 h-auto object-contain"
                 />
@@ -158,34 +158,34 @@ export const CartLineCard = memo(function CartLineCard({
           </div>
 
           <div className="min-w-0 flex-1 space-y-1">
-            <h3 className="font-display text-2xl text-[#F8E010] leading-tight truncate">
+            <h3 className="font-display text-2xl text-accent-text leading-tight truncate">
               {item.item}
             </h3>
             {variant && (
-              <p className="text-xs font-semibold text-[#E6E6E6]">
+              <p className="text-xs font-semibold text-text-soft">
                 {variant.label}
               </p>
             )}
           </div>
         </div>
 
-        <div className="flex items-center justify-between sm:justify-end gap-3 border-t sm:border-t-0 border-white/10 pt-3 sm:pt-0">
+        <div className="flex items-center justify-between sm:justify-end gap-3 border-t sm:border-t-0 border-border-subtle pt-3 sm:pt-0">
           <div
             role="group"
             aria-label={`Quantity stepper for ${item.item}`}
-            className="flex items-center gap-1.5 rounded-xl bg-[#101010] p-1 border border-white/15"
+            className="flex items-center gap-1.5 rounded-xl bg-bg p-1 border border-border"
           >
             <button
               type="button"
               aria-label={`Decrease quantity of ${item.item}`}
               onClick={() => handleSetQty(line.qty - 1)}
-              className="inline-flex items-center justify-center min-h-[40px] min-w-[40px] rounded-lg bg-[#161616] text-[#F8F8F8] hover:bg-[#F8E010] hover:text-[#101010] transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F8E010]"
+              className="inline-flex items-center justify-center min-h-[40px] min-w-[40px] rounded-lg bg-surface text-text hover:bg-brand hover:text-on-brand transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
             >
               <Minus className="h-4 w-4" />
             </button>
             <span
               aria-live="polite"
-              className="min-w-[30px] text-center font-bold text-sm text-[#F8F8F8] tabular-nums"
+              className="min-w-[30px] text-center font-bold text-sm text-text tabular-nums"
             >
               {line.qty}
             </span>
@@ -194,13 +194,13 @@ export const CartLineCard = memo(function CartLineCard({
               disabled={line.qty >= 50}
               aria-label={`Increase quantity of ${item.item}`}
               onClick={() => handleSetQty(line.qty + 1)}
-              className="inline-flex items-center justify-center min-h-[40px] min-w-[40px] rounded-lg bg-[#F8E010] text-[#101010] hover:bg-[#F8E850] disabled:opacity-40 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F8E010]"
+              className="inline-flex items-center justify-center min-h-[40px] min-w-[40px] rounded-lg bg-brand text-on-brand hover:bg-brand-splash disabled:opacity-40 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
             >
               <Plus className="h-4 w-4" />
             </button>
           </div>
 
-          <span className="min-w-[90px] text-right font-bold text-lg text-[#F8E010] tabular-nums">
+          <span className="min-w-[90px] text-right font-bold text-lg text-accent-text tabular-nums">
             {formatNaira(lineTotal)}
           </span>
 
@@ -208,7 +208,7 @@ export const CartLineCard = memo(function CartLineCard({
             type="button"
             aria-label={`Remove ${item.item} from cart`}
             onClick={handleRemoveLine}
-            className="inline-flex items-center justify-center min-h-[44px] min-w-[44px] rounded-xl border border-[#E10600]/30 bg-[#101010] text-[#E10600] hover:border-[#E10600] hover:bg-[#E10600]/10 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E10600]"
+            className="inline-flex items-center justify-center min-h-[44px] min-w-[44px] rounded-xl border border-danger bg-bg text-danger hover:border-danger hover:bg-danger/10 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-danger"
           >
             <Trash2 className="h-4 w-4" />
           </button>
@@ -219,10 +219,10 @@ export const CartLineCard = memo(function CartLineCard({
       {hasConflict && (
         <div
           role="alert"
-          className="rounded-xl border border-[#E10600]/50 bg-[#E10600]/10 p-3.5 space-y-3"
+          className="rounded-xl border border-danger/50 bg-danger/10 p-3.5 space-y-3"
         >
-          <div className="flex items-start gap-2 text-xs sm:text-sm text-[#F8F8F8]">
-            <AlertTriangle className="h-4 w-4 text-[#E10600] shrink-0 mt-0.5" />
+          <div className="flex items-start gap-2 text-xs sm:text-sm text-text">
+            <AlertTriangle className="h-4 w-4 text-danger shrink-0 mt-0.5" />
             <span>{conflictMessage}</span>
           </div>
 
@@ -247,7 +247,7 @@ export const CartLineCard = memo(function CartLineCard({
                       handleSetVariant(e.target.value);
                     }
                   }}
-                  className="flex min-h-[42px] w-full rounded-xl border border-white/20 bg-[#101010] px-3 py-2 text-xs sm:text-sm text-[#F8F8F8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F8E010]"
+                  className="flex min-h-[42px] w-full rounded-xl border border-border bg-bg px-3 py-2 text-xs sm:text-sm text-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
                 >
                   <option value="" disabled>
                     Choose an in-stock option…
@@ -264,7 +264,7 @@ export const CartLineCard = memo(function CartLineCard({
             <button
               type="button"
               onClick={handleRemoveLine}
-              className="inline-flex items-center justify-center gap-1.5 min-h-[42px] rounded-xl border border-[#E10600] bg-[#E10600] px-4 py-2 text-xs font-bold text-[#F8F8F8] hover:bg-[#E10600]/90 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+              className="inline-flex items-center justify-center gap-1.5 min-h-[42px] rounded-xl border border-danger bg-danger px-4 py-2 text-xs font-bold text-on-danger hover:bg-danger/90 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
             >
               <Trash2 className="h-3.5 w-3.5" />
               <span>Remove</span>
@@ -275,7 +275,7 @@ export const CartLineCard = memo(function CartLineCard({
 
       {/* Indented Add-On Rows beneath the line card */}
       {(selectedAddOns.length > 0 || unselectedAvailableAddOns.length > 0) && (
-        <div className="pl-4 sm:pl-6 border-l-2 border-white/10 space-y-2">
+        <div className="pl-4 sm:pl-6 border-l-2 border-border-subtle space-y-2">
           {selectedAddOns.map(({ addOn, qty }) => (
             <CartAddOnRow
               key={addOn.id}
@@ -299,11 +299,11 @@ export const CartLineCard = memo(function CartLineCard({
                   key={addOn.id}
                   type="button"
                   onClick={() => handleSetAddOnQty(addOn.id, 1)}
-                  className="inline-flex items-center gap-1.5 min-h-[36px] rounded-lg border border-white/15 bg-[#101010] px-3 py-1.5 text-xs font-semibold text-[#E6E6E6] hover:border-[#F8E010] hover:text-[#F8E010] transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F8E010]"
+                  className="inline-flex items-center gap-1.5 min-h-[36px] rounded-lg border border-border bg-bg px-3 py-1.5 text-xs font-semibold text-text-soft hover:border-accent-text hover:text-accent-text transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
                 >
-                  <Plus className="h-3.5 w-3.5 text-[#F8E010]" />
+                  <Plus className="h-3.5 w-3.5 text-accent-text" />
                   <span>{addOn.name}</span>
-                  <span className="text-[#F8E010] tabular-nums">
+                  <span className="text-accent-text tabular-nums">
                     {formatNaira(toInt(addOn.price))}
                   </span>
                 </button>

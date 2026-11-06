@@ -44,9 +44,9 @@ export function ComboBanner({ comboAddOn }: ComboBannerProps) {
     <div
       role="note"
       aria-label="Slider Combo Upgrade Information"
-      className="rounded-xl border border-[#F8E010]/35 bg-[#161616] px-4 py-3 flex items-center justify-center gap-2.5 text-center text-xs sm:text-sm font-medium text-[#F8F8F8]"
+      className="rounded-xl border border-border-subtle bg-surface px-4 py-3 flex items-center justify-center gap-2.5 text-center text-xs sm:text-sm font-medium text-text"
     >
-      <Sparkles className="h-4 w-4 text-[#F8E010] shrink-0" />
+      <Sparkles className="h-4 w-4 text-accent-text shrink-0" />
       <span>{text}</span>
     </div>
   );
@@ -71,9 +71,9 @@ export function MenuAddOnsBanner({
     <div
       role="note"
       aria-label={ariaLabel}
-      className="rounded-xl border border-[#F8E010]/35 bg-[#161616] px-4 py-3 flex items-center justify-center gap-2.5 text-center text-xs sm:text-sm font-medium text-[#F8F8F8]"
+      className="rounded-xl border border-border-subtle bg-surface px-4 py-3 flex items-center justify-center gap-2.5 text-center text-xs sm:text-sm font-medium text-text"
     >
-      <Sparkles className="h-4 w-4 text-[#F8E010] shrink-0" />
+      <Sparkles className="h-4 w-4 text-accent-text shrink-0" />
       <span>{text}</span>
     </div>
   );

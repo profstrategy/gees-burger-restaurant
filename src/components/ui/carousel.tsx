@@ -197,7 +197,7 @@ export const CarouselPrevious = React.forwardRef<
       onClick={scrollPrev}
       aria-label="Previous slide"
       className={cn(
-        'inline-flex items-center justify-center min-h-[44px] min-w-[44px] rounded-xl border border-white/15 bg-[#161616] text-[#F8F8F8] hover:border-[#F8E010] hover:text-[#F8E010] disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F8E010]',
+        'inline-flex items-center justify-center min-h-[44px] min-w-[44px] rounded-xl border border-border bg-surface text-text hover:border-accent-text hover:text-accent-text disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring',
         className
       )}
       {...props}
@@ -221,7 +221,7 @@ export const CarouselNext = React.forwardRef<
       onClick={scrollNext}
       aria-label="Next slide"
       className={cn(
-        'inline-flex items-center justify-center min-h-[44px] min-w-[44px] rounded-xl border border-white/15 bg-[#161616] text-[#F8F8F8] hover:border-[#F8E010] hover:text-[#F8E010] disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F8E010]',
+        'inline-flex items-center justify-center min-h-[44px] min-w-[44px] rounded-xl border border-border bg-surface text-text hover:border-accent-text hover:text-accent-text disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring',
         className
       )}
       {...props}

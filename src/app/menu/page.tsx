@@ -75,7 +75,7 @@ export default function MenuPage() {
       <Suspense
         fallback={
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
-            <div className="h-96 rounded-2xl border border-white/10 bg-[#161616] p-8 animate-pulse" />
+            <div className="h-96 rounded-2xl border border-border-subtle bg-surface p-8 animate-pulse" />
           </div>
         }
       >

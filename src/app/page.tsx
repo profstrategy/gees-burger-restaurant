@@ -35,15 +35,15 @@ export default function HomePage() {
       {/* 1. Hero Section */}
       <StageSection
         stain="top-right"
-        className="py-12 sm:py-16 lg:py-20 border-b border-white/10"
+        className="py-12 sm:py-16 lg:py-20 border-b border-border-subtle"
       >
         <div className="mx-auto max-w-7xl px-6 sm:px-10 lg:px-14">
           <div className="flex flex-col items-center text-center space-y-6">
-            <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl text-[#F8E010] leading-[0.95] tracking-wide text-balance">
+            <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl text-accent-text leading-[0.95] tracking-wide text-balance">
               Big flavour. Bold burgers.
             </h1>
 
-            <p className="text-sm sm:text-base lg:text-lg text-[#E6E6E6] max-w-xl leading-relaxed">
+            <p className="text-sm sm:text-base lg:text-lg text-text-soft max-w-xl leading-relaxed">
               Flame-grilled beef burgers, crispy fried chicken buckets, wraps
               and creamy shakes made fresh in Kano.
             </p>
@@ -61,7 +61,7 @@ export default function HomePage() {
               {/* Soft yellow glow behind */}
               <div
                 aria-hidden="true"
-                className="pointer-events-none absolute inset-0 m-auto h-56 w-72 sm:h-72 sm:w-[440px] rounded-full bg-[#F8E010]/20 blur-3xl -z-10"
+                className="pointer-events-none absolute inset-0 m-auto h-56 w-72 sm:h-72 sm:w-[440px] rounded-full bg-brand/20 blur-3xl -z-10"
               />
 
               <div className="relative mx-auto flex items-center justify-center gap-2 sm:gap-6 md:gap-10">
@@ -75,7 +75,7 @@ export default function HomePage() {
                     loading="eager"
                     sizes="(max-width: 640px) 42vw, 260px"
                     referrerPolicy="no-referrer"
-                    className="object-contain drop-shadow-[0_18px_28px_rgba(0,0,0,0.75)]"
+                    className="gb-hero-shadow object-contain"
                   />
                 </div>
 
@@ -89,7 +89,7 @@ export default function HomePage() {
                     loading="eager"
                     sizes="(max-width: 640px) 46vw, 290px"
                     referrerPolicy="no-referrer"
-                    className="object-contain drop-shadow-[0_18px_28px_rgba(0,0,0,0.75)]"
+                    className="gb-hero-shadow object-contain"
                   />
                 </div>
               </div>

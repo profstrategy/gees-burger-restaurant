@@ -790,12 +790,12 @@ describe('Stage 2: Domain State, Reducers & Selectors', () => {
   describe('Stage 5.4: Checkout discriminatedUnion schema, phone normalisation & WhatsApp 1800-char cap', () => {
     it('validates and normalises Nigerian mobile numbers to 234...', () => {
       expect(isValidNigerianPhone('0803 123 4567')).toBe(true);
-      expect(isValidNigerianPhone('+234-916-660-6000')).toBe(true);
+      expect(isValidNigerianPhone('+234-803-123-4567')).toBe(true);
       expect(isValidNigerianPhone('2347012345678')).toBe(true);
       expect(isValidNigerianPhone('06031234567')).toBe(false);
 
       expect(normalizeNigerianPhone('0803 123 4567')).toBe('2348031234567');
-      expect(normalizeNigerianPhone('+234-916-660-6000')).toBe('2349166606000');
+      expect(normalizeNigerianPhone('+234-803-123-4567')).toBe('2348031234567');
     });
 
     it('validates pickup and delivery payloads via checkoutSchema discriminatedUnion', () => {
@@ -1082,7 +1082,7 @@ describe('Stage 2: Domain State, Reducers & Selectors', () => {
 
       expect(jsonLd['@type']).toBe('Restaurant');
       expect(jsonLd.name).toBe("Gee's Burger");
-      expect(jsonLd.telephone).toBe('09166606000');
+      expect(jsonLd.telephone).toBe('07044442424');
       expect(jsonLd.address.streetAddress).toContain('32 Bompai Road');
       expect(jsonLd.servesCuisine.length).toBeGreaterThan(0);
       expect(jsonLd.hasMenu.hasMenuSection.length).toBeGreaterThan(0);
